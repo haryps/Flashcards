@@ -4,9 +4,7 @@ import NavMenu from './NavMenu';
 
 export default (props: { children?: React.ReactNode }) => (
     <React.Fragment>
-        <NavMenu/>
-        <Container>
-            {props.children}
-        </Container>
+        <NavMenu />
+        {props.children}
     </React.Fragment>
 );

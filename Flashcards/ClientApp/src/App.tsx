@@ -12,6 +12,7 @@ export default () => (
     <Layout>
         <Route exact path='/' component={Flashcards} />
         <Route path='/counter' component={Counter} />
+        <Route path='/flashcards' component={Flashcards} />
         <Route path='/fetch-data/:startDateIndex?' component={FetchData} />
     </Layout>
 );
