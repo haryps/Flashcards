@@ -3,46 +3,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var react_redux_1 = require("react-redux");
 require("./album.css");
+var Introduction_1 = require("./Introduction");
+var Grid_1 = require("./Grid");
 var Flashcards = function () { return (React.createElement("main", { role: "main" },
-    React.createElement("section", { className: "jumbotron text-center" },
-        React.createElement("div", { className: "container" },
-            React.createElement("h1", { className: "jumbotron-heading" }, "Album example"),
-            React.createElement("p", { className: "lead text-muted" }, "Something short and leading about the collection below\u2014its contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely."),
-            React.createElement("p", null,
-                React.createElement("a", { href: "#", className: "btn btn-primary my-2" }, "Main call to action"),
-                React.createElement("a", { href: "#", className: "btn btn-secondary my-2" }, "Secondary action")))),
+    React.createElement(Introduction_1.default, null),
     React.createElement("div", { className: "album py-5 bg-light" },
         React.createElement("div", { className: "container" },
             React.createElement("div", { className: "row" },
-                React.createElement("div", { className: "col-md-4" },
-                    React.createElement("div", { className: "card mb-4 box-shadow" },
-                        React.createElement("img", { className: "card-img-top", "data-src": "holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail", alt: "Card image cap" }),
-                        React.createElement("div", { className: "card-body" },
-                            React.createElement("p", { className: "card-text" }, "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer."),
-                            React.createElement("div", { className: "d-flex justify-content-between align-items-center" },
-                                React.createElement("div", { className: "btn-group" },
-                                    React.createElement("button", { type: "button", className: "btn btn-sm btn-outline-secondary" }, "View"),
-                                    React.createElement("button", { type: "button", className: "btn btn-sm btn-outline-secondary" }, "Edit")),
-                                React.createElement("small", { className: "text-muted" }, "9 mins"))))),
-                React.createElement("div", { className: "col-md-4" },
-                    React.createElement("div", { className: "card mb-4 box-shadow" },
-                        React.createElement("img", { className: "card-img-top", "data-src": "holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail", alt: "Card image cap" }),
-                        React.createElement("div", { className: "card-body" },
-                            React.createElement("p", { className: "card-text" }, "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer."),
-                            React.createElement("div", { className: "d-flex justify-content-between align-items-center" },
-                                React.createElement("div", { className: "btn-group" },
-                                    React.createElement("button", { type: "button", className: "btn btn-sm btn-outline-secondary" }, "View"),
-                                    React.createElement("button", { type: "button", className: "btn btn-sm btn-outline-secondary" }, "Edit")),
-                                React.createElement("small", { className: "text-muted" }, "9 mins"))))),
-                React.createElement("div", { className: "col-md-4" },
-                    React.createElement("div", { className: "card mb-4 box-shadow" },
-                        React.createElement("img", { className: "card-img-top", "data-src": "holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail", alt: "Card image cap" }),
-                        React.createElement("div", { className: "card-body" },
-                            React.createElement("p", { className: "card-text" }, "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer."),
-                            React.createElement("div", { className: "d-flex justify-content-between align-items-center" },
-                                React.createElement("div", { className: "btn-group" },
-                                    React.createElement("button", { type: "button", className: "btn btn-sm btn-outline-secondary" }, "View"),
-                                    React.createElement("button", { type: "button", className: "btn btn-sm btn-outline-secondary" }, "Edit")),
-                                React.createElement("small", { className: "text-muted" }, "9 mins")))))))))); };
+                React.createElement(Grid_1.default, null)))))); };
 exports.default = react_redux_1.connect()(Flashcards);
 //# sourceMappingURL=Flashcards.js.map

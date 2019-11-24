@@ -15,19 +15,24 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var react_redux_1 = require("react-redux");
-var Introduction = /** @class */ (function (_super) {
-    __extends(Introduction, _super);
-    function Introduction() {
+var GridDeck_1 = require("./GridDeck");
+var Grid = /** @class */ (function (_super) {
+    __extends(Grid, _super);
+    function Grid() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    Introduction.prototype.render = function () {
-        return (React.createElement(React.Fragment, null,
-            React.createElement("section", { className: "jumbotron text-center" },
-                React.createElement("div", { className: "container" },
-                    React.createElement("h1", { className: "jumbotron-heading" }, "GRE Vocabulary Flashcards")))));
+    Grid.prototype.render = function () {
+        return (React.createElement(React.Fragment, null, this.renderGridDecks()));
     };
-    return Introduction;
+    Grid.prototype.renderGridDecks = function () {
+        var decks = [];
+        for (var i = 1; i <= 18; i++) {
+            decks.push(React.createElement(GridDeck_1.default, { index: i }));
+        }
+        return decks;
+    };
+    return Grid;
 }(React.PureComponent));
 ;
-exports.default = react_redux_1.connect()(Introduction);
-//# sourceMappingURL=Introduction.js.map
+exports.default = react_redux_1.connect()(Grid);
+//# sourceMappingURL=Grid.js.map

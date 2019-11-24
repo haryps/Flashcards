@@ -22,11 +22,15 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\components\Flashcards.tsx" />
+    <None Remove="ClientApp\src\components\Grid.tsx" />
+    <None Remove="ClientApp\src\components\GridDeck.tsx" />
     <None Remove="ClientApp\src\components\Introduction.tsx" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\components\Flashcards.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\components\Grid.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\components\GridDeck.tsx" />
     <TypeScriptCompile Include="ClientApp\src\components\Introduction.tsx" />
   </ItemGroup>
 
