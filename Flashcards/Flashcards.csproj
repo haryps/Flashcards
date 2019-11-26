@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\components\Card.tsx" />
     <None Remove="ClientApp\src\components\Flashcards.tsx" />
     <None Remove="ClientApp\src\components\Grid.tsx" />
     <None Remove="ClientApp\src\components\GridDeck.tsx" />
@@ -28,6 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\components\Card.tsx" />
     <TypeScriptCompile Include="ClientApp\src\components\Flashcards.tsx" />
     <TypeScriptCompile Include="ClientApp\src\components\Grid.tsx" />
     <TypeScriptCompile Include="ClientApp\src\components\GridDeck.tsx" />

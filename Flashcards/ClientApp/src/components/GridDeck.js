@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var react_redux_1 = require("react-redux");
+var react_router_dom_1 = require("react-router-dom");
 var GridDeck = /** @class */ (function (_super) {
     __extends(GridDeck, _super);
     function GridDeck() {
@@ -29,7 +30,7 @@ var GridDeck = /** @class */ (function (_super) {
                         React.createElement("p", { className: "card-text" }, "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer."),
                         React.createElement("div", { className: "d-flex justify-content-between align-items-center" },
                             React.createElement("div", { className: "btn-group" },
-                                React.createElement("button", { type: "button", className: "btn btn-sm btn-outline-secondary" },
+                                React.createElement(react_router_dom_1.Link, { to: "/card", className: "btn btn-sm btn-outline-secondary" },
                                     "Practice this deck ",
                                     this.props.index,
                                     " \u2192"))))))));
