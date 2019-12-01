@@ -10,7 +10,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +33,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\components\api-authorization\ApiAuthorizationConstants.tsx" />
+    <None Remove="ClientApp\src\components\api-authorization\ApiAuthorizationRoutes.tsx" />
+    <None Remove="ClientApp\src\components\api-authorization\AuthorizeRoute.tsx" />
+    <None Remove="ClientApp\src\components\api-authorization\AuthorizeService.tsx" />
+    <None Remove="ClientApp\src\components\api-authorization\Login.tsx" />
+    <None Remove="ClientApp\src\components\api-authorization\LoginMenu.tsx" />
+    <None Remove="ClientApp\src\components\api-authorization\Logout.tsx" />
     <None Remove="ClientApp\src\components\Deck.tsx" />
     <None Remove="ClientApp\src\components\Flashcards.tsx" />
     <None Remove="ClientApp\src\components\Grid.tsx" />
@@ -29,11 +48,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\components\api-authorization\ApiAuthorizationConstants.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\components\api-authorization\ApiAuthorizationRoutes.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\components\api-authorization\AuthorizeRoute.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\components\api-authorization\AuthorizeService.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\components\api-authorization\Login.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\components\api-authorization\LoginMenu.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\components\api-authorization\Logout.tsx" />
     <TypeScriptCompile Include="ClientApp\src\components\Deck.tsx" />
     <TypeScriptCompile Include="ClientApp\src\components\Flashcards.tsx" />
     <TypeScriptCompile Include="ClientApp\src\components\Grid.tsx" />
     <TypeScriptCompile Include="ClientApp\src\components\GridDeck.tsx" />
     <TypeScriptCompile Include="ClientApp\src\components\Introduction.tsx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
