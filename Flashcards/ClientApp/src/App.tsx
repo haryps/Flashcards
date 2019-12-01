@@ -7,14 +7,14 @@ import FetchData from './components/FetchData';
 
 import './custom.css'
 import Flashcards from './components/Flashcards';
-import Card from './components/Card';
+import Deck from './components/Deck';
 
 export default () => (
     <Layout>
         <Route exact path='/' component={Flashcards} />
         <Route path='/counter' component={Counter} />
         <Route path='/flashcards' component={Flashcards} />
-        <Route path='/card' component={Card} />
+        <Route path='/deck' component={Deck} />
         <Route path='/fetch-data/:startDateIndex?' component={FetchData} />
     </Layout>
 );

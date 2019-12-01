@@ -15,19 +15,19 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var react_redux_1 = require("react-redux");
-var CardStore = require("../store/Card");
-var Card = /** @class */ (function (_super) {
-    __extends(Card, _super);
-    function Card() {
+var DeckStore = require("../store/Deck");
+var Deck = /** @class */ (function (_super) {
+    __extends(Deck, _super);
+    function Deck() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    Card.prototype.render = function () {
+    Deck.prototype.render = function () {
         return (React.createElement(React.Fragment, null,
             React.createElement("h1", null, "Counter"),
             React.createElement("p", null, "This is a simple example of a React component.")));
     };
-    return Card;
+    return Deck;
 }(React.PureComponent));
 ;
-exports.default = react_redux_1.connect(function (state) { return state.card; }, CardStore.actionCreators)(Card);
-//# sourceMappingURL=Card.js.map
+exports.default = react_redux_1.connect(function (state) { return state.deck; }, DeckStore.actionCreators)(Deck);
+//# sourceMappingURL=Deck.js.map

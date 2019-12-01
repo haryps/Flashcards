@@ -30,7 +30,7 @@ var GridDeck = /** @class */ (function (_super) {
                         React.createElement("p", { className: "card-text" }, "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer."),
                         React.createElement("div", { className: "d-flex justify-content-between align-items-center" },
                             React.createElement("div", { className: "btn-group" },
-                                React.createElement(react_router_dom_1.Link, { to: "/card", className: "btn btn-sm btn-outline-secondary" },
+                                React.createElement(react_router_dom_1.Link, { to: "/deck", className: "btn btn-sm btn-outline-secondary" },
                                     "Practice this deck ",
                                     this.props.index,
                                     " \u2192"))))))));

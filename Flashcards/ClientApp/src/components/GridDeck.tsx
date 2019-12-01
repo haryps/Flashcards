@@ -13,7 +13,7 @@ class GridDeck extends React.PureComponent<any> {
                             <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                             <div className="d-flex justify-content-between align-items-center">
                                 <div className="btn-group">
-                                    <Link to="/card" className="btn btn-sm btn-outline-secondary">
+                                    <Link to="/deck" className="btn btn-sm btn-outline-secondary">
                                         Practice this deck {this.props.index} →
                                     </Link>
                                 </div>

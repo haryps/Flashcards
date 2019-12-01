@@ -2,14 +2,14 @@
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { ApplicationState } from '../store';
-import * as CardStore from '../store/Card';
+import * as DeckStore from '../store/Deck';
 
-type CardProps =
-    CardStore.CardState &
-    typeof CardStore.actionCreators &
+type DeckProps =
+    DeckStore.DeckState &
+    typeof DeckStore.actionCreators &
     RouteComponentProps<{}>;
 
-class Card extends React.PureComponent<CardProps> {
+class Deck extends React.PureComponent<DeckProps> {
     public render() {
         return (
             <React.Fragment>
@@ -22,6 +22,6 @@ class Card extends React.PureComponent<CardProps> {
 };
 
 export default connect(
-    (state: ApplicationState) => state.card,
-    CardStore.actionCreators
-)(Card);
+    (state: ApplicationState) => state.deck,
+    DeckStore.actionCreators
+)(Deck as any);

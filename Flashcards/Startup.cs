@@ -54,7 +54,7 @@ namespace Flashcards
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
+                    pattern: "{controller=Deck}/{action=Index}/{id?}");
             });
 
             app.UseSpa(spa =>

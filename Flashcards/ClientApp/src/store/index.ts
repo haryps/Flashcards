@@ -1,10 +1,10 @@
 import * as WeatherForecasts from './WeatherForecasts';
 import * as Counter from './Counter';
-import * as Card from './Card';
+import * as Deck from './Deck';
 
 // The top-level state object
 export interface ApplicationState {
-    card: Card.CardState | undefined;
+    deck: Deck.DeckState | undefined;
     counter: Counter.CounterState | undefined;
     weatherForecasts: WeatherForecasts.WeatherForecastsState | undefined;
 }
@@ -13,7 +13,7 @@ export interface ApplicationState {
 // the reducer with the matching name. It's important that the names match exactly, and that the reducer
 // acts on the corresponding ApplicationState property type.
 export const reducers = {
-    card: Card.reducer,
+    card: Deck.reducer,
     counter: Counter.reducer,
     weatherForecasts: WeatherForecasts.reducer
 };
