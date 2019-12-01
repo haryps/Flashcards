@@ -1,9 +1,10 @@
-import * as React from 'react';
+import React from 'react'
+import { Component } from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { ApplicationPaths, QueryParameterNames } from './ApiAuthorizationConstants'
 import authService from './AuthorizeService'
 
-export default class AuthorizeRoute extends React.PureComponent<any> {
+export default class AuthorizeRoute extends Component {
     constructor(props) {
         super(props);
 

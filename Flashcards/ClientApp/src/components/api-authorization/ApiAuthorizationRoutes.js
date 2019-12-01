@@ -4,9 +4,9 @@ import { Login } from './Login'
 import { Logout } from './Logout'
 import { ApplicationPaths, LoginActions, LogoutActions } from './ApiAuthorizationConstants';
 
-export default class ApiAuthorizationRoutes extends React.PureComponent<any> {
+export default class ApiAuthorizationRoutes extends React.Component {
 
-    public render() {
+    render() {
         return (
             <React.Fragment>
                 <Route path={ApplicationPaths.Login} render={() => loginAction(LoginActions.Login)} />

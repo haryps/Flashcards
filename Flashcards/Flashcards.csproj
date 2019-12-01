@@ -27,19 +27,23 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="Pages\NewFolder\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="Pages\NewFolder\**" />
+    <EmbeddedResource Remove="Pages\NewFolder\**" />
     <None Remove="$(SpaRoot)**" />
+    <None Remove="Pages\NewFolder\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ClientApp\src\components\api-authorization\ApiAuthorizationConstants.tsx" />
-    <None Remove="ClientApp\src\components\api-authorization\ApiAuthorizationRoutes.tsx" />
-    <None Remove="ClientApp\src\components\api-authorization\AuthorizeRoute.tsx" />
-    <None Remove="ClientApp\src\components\api-authorization\AuthorizeService.tsx" />
-    <None Remove="ClientApp\src\components\api-authorization\Login.tsx" />
-    <None Remove="ClientApp\src\components\api-authorization\LoginMenu.tsx" />
-    <None Remove="ClientApp\src\components\api-authorization\Logout.tsx" />
+    <None Remove="ClientApp\src\components\api-authorization\ApiAuthorizationConstants.js" />
+    <None Remove="ClientApp\src\components\api-authorization\ApiAuthorizationRoutes.js" />
+    <None Remove="ClientApp\src\components\api-authorization\AuthorizeRoute.js" />
+    <None Remove="ClientApp\src\components\api-authorization\AuthorizeService.js" />
+    <None Remove="ClientApp\src\components\api-authorization\Login.js" />
+    <None Remove="ClientApp\src\components\api-authorization\LoginMenu.js" />
+    <None Remove="ClientApp\src\components\api-authorization\Logout.js" />
     <None Remove="ClientApp\src\components\Deck.tsx" />
     <None Remove="ClientApp\src\components\Flashcards.tsx" />
     <None Remove="ClientApp\src\components\Grid.tsx" />
@@ -48,13 +52,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\src\components\api-authorization\ApiAuthorizationConstants.tsx" />
-    <TypeScriptCompile Include="ClientApp\src\components\api-authorization\ApiAuthorizationRoutes.tsx" />
-    <TypeScriptCompile Include="ClientApp\src\components\api-authorization\AuthorizeRoute.tsx" />
-    <TypeScriptCompile Include="ClientApp\src\components\api-authorization\AuthorizeService.tsx" />
-    <TypeScriptCompile Include="ClientApp\src\components\api-authorization\Login.tsx" />
-    <TypeScriptCompile Include="ClientApp\src\components\api-authorization\LoginMenu.tsx" />
-    <TypeScriptCompile Include="ClientApp\src\components\api-authorization\Logout.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\components\api-authorization\ApiAuthorizationConstants.js" />
+    <TypeScriptCompile Include="ClientApp\src\components\api-authorization\ApiAuthorizationRoutes.js" />
+    <TypeScriptCompile Include="ClientApp\src\components\api-authorization\AuthorizeRoute.js" />
+    <TypeScriptCompile Include="ClientApp\src\components\api-authorization\AuthorizeService.js" />
+    <TypeScriptCompile Include="ClientApp\src\components\api-authorization\Login.js" />
+    <TypeScriptCompile Include="ClientApp\src\components\api-authorization\LoginMenu.js" />
+    <TypeScriptCompile Include="ClientApp\src\components\api-authorization\Logout.js" />
     <TypeScriptCompile Include="ClientApp\src\components\Deck.tsx" />
     <TypeScriptCompile Include="ClientApp\src\components\Flashcards.tsx" />
     <TypeScriptCompile Include="ClientApp\src\components\Grid.tsx" />

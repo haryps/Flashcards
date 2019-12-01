@@ -6,7 +6,7 @@ import { QueryParameterNames, LogoutActions, ApplicationPaths } from './ApiAutho
 // The main responsibility of this component is to handle the user's logout process.
 // This is the starting point for the logout process, which is usually initiated when a
 // user clicks on the logout button on the LoginMenu component.
-export class Logout extends React.PureComponent<any> {
+export class Logout extends React.Component {
     constructor(props) {
         super(props);
 
