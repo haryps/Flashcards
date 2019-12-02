@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Flashcards.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class InitCreateSchema : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

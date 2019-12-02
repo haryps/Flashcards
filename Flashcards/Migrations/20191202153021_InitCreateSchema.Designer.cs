@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Flashcards.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191201112521_CreateIdentitySchema")]
-    partial class CreateIdentitySchema
+    [Migration("20191202153021_InitCreateSchema")]
+    partial class InitCreateSchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
