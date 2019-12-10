@@ -14,6 +14,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
+var reactstrap_1 = require("reactstrap");
 var react_redux_1 = require("react-redux");
 var DeckStore = require("../store/Deck");
 var Deck = /** @class */ (function (_super) {
@@ -23,8 +24,21 @@ var Deck = /** @class */ (function (_super) {
     }
     Deck.prototype.render = function () {
         return (React.createElement(React.Fragment, null,
-            React.createElement("h1", null, "Counter"),
-            React.createElement("p", null, "This is a simple example of a React component.")));
+            React.createElement(reactstrap_1.Container, null,
+                React.createElement("div", { className: "card text-center" },
+                    React.createElement("div", { className: "card-header" }, "Featured"),
+                    React.createElement("div", { className: "card-body" },
+                        React.createElement("h5", { className: "card-title" }, "Special title treatment"),
+                        React.createElement("p", { className: "card-text" }, "With supporting text below as a natural lead-in to additional content."),
+                        React.createElement("a", { href: "#", className: "btn btn-primary" }, "Click to see the meaning")),
+                    React.createElement("div", { className: "card-footer text-muted" }, "2 days ago")),
+                React.createElement("div", { className: "card text-center" },
+                    React.createElement("div", { className: "card-header" }, "Featured"),
+                    React.createElement("div", { className: "card-body" },
+                        React.createElement("h5", { className: "card-title" }, "Special title treatment"),
+                        React.createElement("p", { className: "card-text" }, "With supporting text below as a natural lead-in to additional content."),
+                        React.createElement("a", { href: "#", className: "btn btn-primary" }, "Click to see the meaning")),
+                    React.createElement("div", { className: "card-footer text-muted" }, "2 days ago")))));
     };
     return Deck;
 }(React.PureComponent));

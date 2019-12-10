@@ -15,9 +15,9 @@ import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
 export default () => (
     <Layout>
         <Route exact path='/' component={Flashcards} />
-        <AuthorizeRoute path='/counter' component={Counter} />
+        <Route path='/counter' component={Counter} />
         <Route path='/flashcards' component={Flashcards} />
-        <Route path='/deck' component={Deck} />
+        <AuthorizeRoute path='/deck' component={Deck} />
         <Route path='/fetch-data/:startDateIndex?' component={FetchData} />
         <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
     </Layout>
