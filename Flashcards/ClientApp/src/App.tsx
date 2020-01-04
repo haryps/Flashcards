@@ -16,9 +16,9 @@ export default () => (
     <Layout>
         <Route exact path='/' component={Flashcards} />
         <Route path='/counter' component={Counter} />
-        <Route path='/flashcards' component={Flashcards} />
+        <AuthorizeRoute path='/flashcards' component={Flashcards} />
         <AuthorizeRoute path='/deck' component={Deck} />
-        <Route path='/fetch-data/:startDateIndex?' component={FetchData} />
+        <AuthorizeRoute path='/fetch-data/:startDateIndex?' component={FetchData} />
         <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
     </Layout>
 );

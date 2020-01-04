@@ -12,6 +12,7 @@
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.30" />
     <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.0.0" />
@@ -35,6 +36,17 @@
     <None Remove="$(SpaRoot)**" />
     <None Remove="Pages\NewFolder\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20200104121902_CreateIdentitySchema.cs" />
+    <Compile Remove="Migrations\20200104121902_CreateIdentitySchema.Designer.cs" />
+    <Compile Remove="Migrations\20200104122619_CreateIdentitySchema.cs" />
+    <Compile Remove="Migrations\20200104122619_CreateIdentitySchema.Designer.cs" />
+    <Compile Remove="Migrations\20200104171749_CreateIdentitySchema.cs" />
+    <Compile Remove="Migrations\20200104171749_CreateIdentitySchema.Designer.cs" />
+    <Compile Remove="Migrations\20200104171937_CreateIdentitySchema.cs" />
+    <Compile Remove="Migrations\20200104171937_CreateIdentitySchema.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -65,10 +77,6 @@
     <TypeScriptCompile Include="ClientApp\src\components\Grid.tsx" />
     <TypeScriptCompile Include="ClientApp\src\components\GridDeck.tsx" />
     <TypeScriptCompile Include="ClientApp\src\components\Introduction.tsx" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Data\" />
   </ItemGroup>
 
   <ItemGroup>

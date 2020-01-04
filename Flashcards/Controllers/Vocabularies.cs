@@ -1,21 +1,24 @@
-﻿using System;
+﻿using Flashcards.Controllers;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Flashcards
+namespace Flashcards.Controllers
 {
-    public class Vocabularies
+    public class Vocabularies : IVocabulary
     {
-        internal static void Load()
+        private Dictionary<int, IEnumerable<Tuple<string, string>>> VocabDictionary;
+
+        public Vocabularies()
         {
             using (var sr = new StreamReader(@"Resource\wordlist.csv"))
             {                
                 sr.ReadLine();  //Skip the header
 
                 List<Tuple<string, string>> vocabs = new List<Tuple<string, string>>();
-                Dictionary<int, List<Tuple<string, string>>> vocabDictionary = new Dictionary<int, List<Tuple<string, string>>>();
+                VocabDictionary = new Dictionary<int, IEnumerable<Tuple<string, string>>>();
 
                 int counter = 0;
                 while (!sr.EndOfStream)
@@ -39,10 +42,14 @@ namespace Flashcards
                         segment.Add(vocabs[j]);
                     }
 
-                    vocabDictionary.Add(i + 1, segment);
+                    VocabDictionary.Add(i + 1, segment);
                 }
-
             }
+        }
+
+        public IEnumerable<Tuple<string, string>> GetVocabs(int deck)
+        {
+            return VocabDictionary[deck];
         }
     }
 }

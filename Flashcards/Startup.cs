@@ -1,13 +1,15 @@
+using Flashcards.Controllers;
+using Flashcards.Data;
 using Flashcards.Models;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Flashcards.Data;
-using Microsoft.AspNetCore.Authentication;
 
 namespace Flashcards
 {
@@ -28,16 +30,20 @@ namespace Flashcards
         Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<ApplicationUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                //.AddDefaultUI()
+                .AddDefaultTokenProviders();
 
             services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+                    .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddSingleton<IVocabulary, Vocabularies>();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -49,8 +55,6 @@ namespace Flashcards
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime applicationLifetime)
         {
-            applicationLifetime.ApplicationStarted.Register(Vocabularies.Load);
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
