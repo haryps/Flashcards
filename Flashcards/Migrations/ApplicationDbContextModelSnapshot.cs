@@ -115,6 +115,31 @@ namespace Flashcards.Migrations
                     b.ToTable("AppUser");
                 });
 
+            modelBuilder.Entity("Flashcards.Models.Progression", b =>
+                {
+                    b.Property<int>("ProgressionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Understand")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Word")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ProgressionId");
+
+                    b.HasIndex("AppUserId", "Word", "Understand")
+                        .IsUnique();
+
+                    b.ToTable("Progressions");
+                });
+
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.DeviceFlowCodes", b =>
                 {
                     b.Property<string>("UserCode")
@@ -300,6 +325,15 @@ namespace Flashcards.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Flashcards.Models.Progression", b =>
+                {
+                    b.HasOne("Flashcards.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("Progressions")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Flashcards.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class CreateInitialSchema : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -144,6 +144,27 @@ namespace Flashcards.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Progressions",
+                columns: table => new
+                {
+                    ProgressionId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AppUserId = table.Column<int>(nullable: false),
+                    Word = table.Column<string>(nullable: false),
+                    Understand = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Progressions", x => x.ProgressionId);
+                    table.ForeignKey(
+                        name: "FK_Progressions_AppUser_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AppUser",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -247,6 +268,12 @@ namespace Flashcards.Migrations
                 name: "IX_PersistedGrants_SubjectId_ClientId_Type",
                 table: "PersistedGrants",
                 columns: new[] { "SubjectId", "ClientId", "Type" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Progressions_AppUserId_Word_Understand",
+                table: "Progressions",
+                columns: new[] { "AppUserId", "Word", "Understand" },
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -271,6 +298,9 @@ namespace Flashcards.Migrations
 
             migrationBuilder.DropTable(
                 name: "PersistedGrants");
+
+            migrationBuilder.DropTable(
+                name: "Progressions");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

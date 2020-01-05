@@ -13,11 +13,35 @@ namespace Flashcards.Data
         {
         }
 
+        public DbSet<Progression> Progressions { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
             builder.Entity<ApplicationUser>().ToTable("AppUser");
+
+            builder.Entity<Progression>()
+                .HasOne(p => p.ApplicationUser)
+                .WithMany(x => x.Progressions)
+                .HasForeignKey(p => p.AppUserId);
+
+            builder.Entity<Progression>()
+                .Property(p => p.AppUserId)
+                .IsRequired();
+
+            builder.Entity<Progression>()
+                .Property(p => p.Word)
+                .IsRequired();
+
+            builder.Entity<Progression>()
+                .Property(p => p.Understand)
+                .IsRequired();
+
+            builder.Entity<Progression>()
+                .HasIndex(p => new { p.AppUserId, p.Word, p.Understand })
+                .IsUnique();
         }
+
     }
 }
