@@ -5,7 +5,7 @@ import { AppThunkAction } from '.';
 // STATE - This defines the type of data maintained in the Redux store.
 
 export interface DeckState {
-    deckId?: number;
+    deckId: number;
     cards: Card[];
 }
 
@@ -23,6 +23,7 @@ export interface Card {
 export interface RequestDeckAction {
     type: 'REQUEST_DECK';
     deckId: number;
+    deck: Card[];
 }
 
 export interface ReceiveDeckAction {
@@ -41,15 +42,16 @@ export type KnownAction = RequestDeckAction | ReceiveDeckAction;
 
 export const actionCreators = {
     requestDeck: (deckId: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
+
         const appState = getState();
+
         if (appState && appState.deck) {
-            fetch('deck')
+            const url = 'api/deck/' + deckId;
+            fetch(url)
                 .then(response => response.json() as Promise<Card[]>)
                 .then(data => {
-                    dispatch({ type: 'RECEIVE_DECK', deckId: deckId, cards: data });
+                    dispatch({ type: 'REQUEST_DECK', deckId: deckId, deck: data });
                 });
-
-            dispatch({ type: 'REQUEST_DECK', deckId: deckId });
         }
     }
 };
@@ -57,7 +59,7 @@ export const actionCreators = {
 // ----------------
 // REDUCER - For a given state and action, returns the new state. To support time travel, this must not mutate the old state.
 
-const unloadedState: DeckState = { cards: [] };
+const unloadedState: DeckState = { cards: [], deckId: 1 };
 
 export const reducer: Reducer<DeckState> = (state: DeckState | undefined, incomingAction: Action): DeckState => {
     if (state === undefined) {
@@ -68,12 +70,10 @@ export const reducer: Reducer<DeckState> = (state: DeckState | undefined, incomi
     switch (action.type) {
         case 'REQUEST_DECK':
             return {
-                deckId:action.deckId,
+                deckId: action.deckId,
                 cards: state.cards
             };
         case 'RECEIVE_DECK':
-            // Only accept the incoming data if it matches the most recent request. This ensures we correctly
-            // handle out-of-order responses.
             if (action.deckId === state.deckId) {
                 return {
                     deckId: action.deckId,

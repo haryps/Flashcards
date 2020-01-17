@@ -4,14 +4,16 @@ using Flashcards.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Flashcards.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200112124254_DecreaesWordLength")]
+    partial class DecreaesWordLength
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -125,9 +127,6 @@ namespace Flashcards.Migrations
                     b.Property<int>("AppUserId")
                         .HasColumnType("int");
 
-                    b.Property<int>("DeckId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("Understand")
                         .HasColumnType("bit");
 
@@ -138,7 +137,7 @@ namespace Flashcards.Migrations
 
                     b.HasKey("ProgressionId");
 
-                    b.HasIndex("AppUserId", "DeckId", "Word", "Understand")
+                    b.HasIndex("AppUserId", "Word", "Understand")
                         .IsUnique();
 
                     b.ToTable("Progressions");

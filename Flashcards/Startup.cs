@@ -44,6 +44,8 @@ namespace Flashcards
             services.AddRazorPages();
 
             services.AddSingleton<IVocabulary, Vocabularies>();
+            services.AddTransient<IFlashcardRepository, FlashcardRepository>();
+            services.AddTransient<DbContext, ApplicationDbContext>();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -83,7 +85,7 @@ namespace Flashcards
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
+                    pattern: "api/{controller}/{id?}");
                 endpoints.MapRazorPages();
             });
 

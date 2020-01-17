@@ -64,6 +64,7 @@
     <None Remove="ClientApp\src\components\Grid.tsx" />
     <None Remove="ClientApp\src\components\GridDeck.tsx" />
     <None Remove="ClientApp\src\components\Introduction.tsx" />
+    <None Remove="ClientApp\src\components\NavMenu.tsx" />
   </ItemGroup>
 
   <ItemGroup>
@@ -79,6 +80,7 @@
     <TypeScriptCompile Include="ClientApp\src\components\Grid.tsx" />
     <TypeScriptCompile Include="ClientApp\src\components\GridDeck.tsx" />
     <TypeScriptCompile Include="ClientApp\src\components\Introduction.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\components\NavMenu.tsx" />
   </ItemGroup>
 
   <ItemGroup>

@@ -7,7 +7,7 @@ var Deck = require("./Deck");
 // the reducer with the matching name. It's important that the names match exactly, and that the reducer
 // acts on the corresponding ApplicationState property type.
 exports.reducers = {
-    card: Deck.reducer,
+    deck: Deck.reducer,
     counter: Counter.reducer,
     weatherForecasts: WeatherForecasts.reducer
 };

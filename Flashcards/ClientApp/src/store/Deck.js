@@ -7,18 +7,18 @@ exports.actionCreators = {
     requestDeck: function (deckId) { return function (dispatch, getState) {
         var appState = getState();
         if (appState && appState.deck) {
-            fetch('deck')
+            var url = 'api/deck/' + deckId;
+            fetch(url)
                 .then(function (response) { return response.json(); })
                 .then(function (data) {
-                dispatch({ type: 'RECEIVE_DECK', deckId: deckId, cards: data });
+                dispatch({ type: 'REQUEST_DECK', deckId: deckId, deck: data });
             });
-            dispatch({ type: 'REQUEST_DECK', deckId: deckId });
         }
     }; }
 };
 // ----------------
 // REDUCER - For a given state and action, returns the new state. To support time travel, this must not mutate the old state.
-var unloadedState = { cards: [] };
+var unloadedState = { cards: [], deckId: 1 };
 exports.reducer = function (state, incomingAction) {
     if (state === undefined) {
         return unloadedState;
@@ -31,8 +31,6 @@ exports.reducer = function (state, incomingAction) {
                 cards: state.cards
             };
         case 'RECEIVE_DECK':
-            // Only accept the incoming data if it matches the most recent request. This ensures we correctly
-            // handle out-of-order responses.
             if (action.deckId === state.deckId) {
                 return {
                     deckId: action.deckId,

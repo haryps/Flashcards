@@ -18,6 +18,7 @@ namespace Flashcards.Models
         public int ProgressionId { get; set; }
         public int AppUserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
+        public int DeckId { get; set; }
         public string Word { get; set; }
         public bool Understand { get; set; }
     }

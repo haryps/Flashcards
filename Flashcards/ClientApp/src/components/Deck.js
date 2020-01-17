@@ -22,6 +22,12 @@ var Deck = /** @class */ (function (_super) {
     function Deck() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+    Deck.prototype.componentDidMount = function () {
+        this.props.requestDeck(parseInt(this.props.match.params.id, 10));
+    };
+    Deck.prototype.componentDidUpdate = function () {
+        this.props.requestDeck(parseInt(this.props.match.params.id, 10));
+    };
     Deck.prototype.render = function () {
         return (React.createElement(React.Fragment, null,
             React.createElement(reactstrap_1.Container, null,
@@ -43,5 +49,8 @@ var Deck = /** @class */ (function (_super) {
     return Deck;
 }(React.PureComponent));
 ;
+//const mapStateToProps = (state: ApplicationState) => {     
+//    cards: state.deck?.cards
+//};
 exports.default = react_redux_1.connect(function (state) { return state.deck; }, DeckStore.actionCreators)(Deck);
 //# sourceMappingURL=Deck.js.map

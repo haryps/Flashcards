@@ -31,7 +31,12 @@ namespace Flashcards.Data
                 .IsRequired();
 
             builder.Entity<Progression>()
+                .Property(p => p.DeckId)
+                .IsRequired();
+
+            builder.Entity<Progression>()
                 .Property(p => p.Word)
+                .HasMaxLength(20)
                 .IsRequired();
 
             builder.Entity<Progression>()
@@ -39,7 +44,7 @@ namespace Flashcards.Data
                 .IsRequired();
 
             builder.Entity<Progression>()
-                .HasIndex(p => new { p.AppUserId, p.Word, p.Understand })
+                .HasIndex(p => new { p.AppUserId, p.DeckId, p.Word, p.Understand })
                 .IsUnique();
         }
 

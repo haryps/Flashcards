@@ -8,13 +8,21 @@ import * as DeckStore from '../store/Deck';
 type DeckProps =
     DeckStore.DeckState &
     typeof DeckStore.actionCreators &
-    RouteComponentProps<{}>;
+    RouteComponentProps<{ id: string}>;
 
 class Deck extends React.PureComponent<DeckProps> {
+
+    public componentDidMount() {
+        this.props.requestDeck(parseInt(this.props.match.params.id, 10));
+    }
+
+    public componentDidUpdate() {
+        this.props.requestDeck(parseInt(this.props.match.params.id, 10));
+    }
+
     public render() {
         return (
             <React.Fragment>
-                <Container>
                     <div className="card text-center">
                         <div className="card-header">
                             Featured
@@ -41,13 +49,17 @@ class Deck extends React.PureComponent<DeckProps> {
                             2 days ago
                         </div>
                     </div>
-                </Container>
             </React.Fragment>
         );
     }
 };
 
+const mapStateToProps = (state: ApplicationState) => {     
+    deck: state.deck
+};
+
 export default connect(
-    (state: ApplicationState) => state.deck,
+    mapStateToProps,
+    //(state: ApplicationState) => state.deck,
     DeckStore.actionCreators
 )(Deck as any);

@@ -27,7 +27,7 @@ var Grid = /** @class */ (function (_super) {
     Grid.prototype.renderGridDecks = function () {
         var decks = [];
         for (var i = 1; i <= 18; i++) {
-            decks.push(React.createElement(GridDeck_1.default, { index: i }));
+            decks.push(React.createElement(GridDeck_1.GridDeck, { key: i, index: i }));
         }
         return decks;
     };

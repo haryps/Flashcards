@@ -14,7 +14,6 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
-var react_redux_1 = require("react-redux");
 var react_router_dom_1 = require("react-router-dom");
 var GridDeck = /** @class */ (function (_super) {
     __extends(GridDeck, _super);
@@ -25,18 +24,20 @@ var GridDeck = /** @class */ (function (_super) {
         return (React.createElement(React.Fragment, null,
             React.createElement("div", { className: "col-md-4" },
                 React.createElement("div", { className: "card mb-4 box-shadow" },
-                    React.createElement("img", { className: "card-img-top", "data-src": "holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail", alt: "Card image cap" }),
+                    React.createElement("svg", { height: "225px", width: "100%" },
+                        React.createElement("rect", { fill: "#55595c", x: "0", y: "0", height: "225px", width: "100%" }),
+                        React.createElement("text", { x: "50%", y: "50%", fontWeight: "bold", fill: "white", fontSize: "20px", textAnchor: "middle", dominantBaseline: "middle" }, "Thumbnail")),
                     React.createElement("div", { className: "card-body" },
                         React.createElement("p", { className: "card-text" }, "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer."),
                         React.createElement("div", { className: "d-flex justify-content-between align-items-center" },
                             React.createElement("div", { className: "btn-group" },
-                                React.createElement(react_router_dom_1.Link, { to: "/deck", className: "btn btn-sm btn-outline-secondary" },
+                                React.createElement(react_router_dom_1.Link, { to: "/deck/" + this.props.index, className: "btn btn-sm btn-outline-secondary" },
                                     "Practice this deck ",
                                     this.props.index,
                                     " \u2192"))))))));
     };
     return GridDeck;
 }(React.PureComponent));
+exports.GridDeck = GridDeck;
 ;
-exports.default = react_redux_1.connect()(GridDeck);
 //# sourceMappingURL=GridDeck.js.map
