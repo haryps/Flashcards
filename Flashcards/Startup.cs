@@ -1,6 +1,5 @@
 using Flashcards.Controllers;
 using Flashcards.Data;
-using Flashcards.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -26,31 +25,30 @@ namespace Flashcards
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(
-        Configuration.GetConnectionString("DefaultConnection")));
-
-            services.AddDefaultIdentity<ApplicationUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
-
-            services.AddIdentityServer()
-                    .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();            
-
-            services.AddAuthentication()
-                .AddIdentityServerJwt();
-
             services.AddControllersWithViews();
             services.AddRazorPages();
 
             services.AddSingleton<IVocabulary, Vocabularies>();
             services.AddTransient<IFlashcardRepository, FlashcardRepository>();
-            services.AddTransient<DbContext, ApplicationDbContext>();
 
-            // In production, the React files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
+            services.AddAuthentication("Bearer")
+                .AddJwtBearer("Bearer", options =>
+                {
+                    options.Authority = "http://localhost:5000";
+                    options.RequireHttpsMetadata = false;
+
+                    options.Audience = "api1";
+                });
+
+            services.AddCors(options =>
             {
-                configuration.RootPath = "ClientApp/build";
+                // this defines a CORS policy called "default"
+                options.AddPolicy("default", policy =>
+                {
+                    policy.WithOrigins("http://localhost:5003")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
             });
         }
 
@@ -71,14 +69,12 @@ namespace Flashcards
 
             app.UseStatusCodePages();
 
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseSpaStaticFiles();
 
             app.UseRouting();
 
-            app.UseAuthentication();
-            app.UseIdentityServer();
+            app.UseCors("default");
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -87,16 +83,6 @@ namespace Flashcards
                     name: "default",
                     pattern: "api/{controller}/{id?}");
                 endpoints.MapRazorPages();
-            });
-
-            app.UseSpa(spa =>
-            {
-                spa.Options.SourcePath = "ClientApp";
-
-                if (env.IsDevelopment())
-                {
-                    spa.UseReactDevelopmentServer(npmScript: "start");
-                }
             });
         }
     }

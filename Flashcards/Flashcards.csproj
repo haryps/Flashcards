@@ -10,15 +10,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="2.0.30" />
     <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -39,48 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20200104121902_CreateIdentitySchema.cs" />
-    <Compile Remove="Migrations\20200104121902_CreateIdentitySchema.Designer.cs" />
-    <Compile Remove="Migrations\20200104122619_CreateIdentitySchema.cs" />
-    <Compile Remove="Migrations\20200104122619_CreateIdentitySchema.Designer.cs" />
-    <Compile Remove="Migrations\20200104171749_CreateIdentitySchema.cs" />
-    <Compile Remove="Migrations\20200104171749_CreateIdentitySchema.Designer.cs" />
-    <Compile Remove="Migrations\20200104171937_CreateIdentitySchema.cs" />
-    <Compile Remove="Migrations\20200104171937_CreateIdentitySchema.Designer.cs" />
-    <Compile Remove="Migrations\20200105140155_CreateInitialSchema.cs" />
-    <Compile Remove="Migrations\20200105140155_CreateInitialSchema.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="ClientApp\src\components\api-authorization\ApiAuthorizationConstants.js" />
-    <None Remove="ClientApp\src\components\api-authorization\ApiAuthorizationRoutes.js" />
-    <None Remove="ClientApp\src\components\api-authorization\AuthorizeRoute.js" />
-    <None Remove="ClientApp\src\components\api-authorization\AuthorizeService.js" />
-    <None Remove="ClientApp\src\components\api-authorization\Login.js" />
-    <None Remove="ClientApp\src\components\api-authorization\LoginMenu.js" />
-    <None Remove="ClientApp\src\components\api-authorization\Logout.js" />
-    <None Remove="ClientApp\src\components\Deck.tsx" />
-    <None Remove="ClientApp\src\components\Flashcards.tsx" />
-    <None Remove="ClientApp\src\components\Grid.tsx" />
-    <None Remove="ClientApp\src\components\GridDeck.tsx" />
-    <None Remove="ClientApp\src\components\Introduction.tsx" />
-    <None Remove="ClientApp\src\components\NavMenu.tsx" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\src\components\api-authorization\ApiAuthorizationConstants.js" />
-    <TypeScriptCompile Include="ClientApp\src\components\api-authorization\ApiAuthorizationRoutes.js" />
-    <TypeScriptCompile Include="ClientApp\src\components\api-authorization\AuthorizeRoute.js" />
-    <TypeScriptCompile Include="ClientApp\src\components\api-authorization\AuthorizeService.js" />
-    <TypeScriptCompile Include="ClientApp\src\components\api-authorization\Login.js" />
-    <TypeScriptCompile Include="ClientApp\src\components\api-authorization\LoginMenu.js" />
-    <TypeScriptCompile Include="ClientApp\src\components\api-authorization\Logout.js" />
-    <TypeScriptCompile Include="ClientApp\src\components\Deck.tsx" />
-    <TypeScriptCompile Include="ClientApp\src\components\Flashcards.tsx" />
-    <TypeScriptCompile Include="ClientApp\src\components\Grid.tsx" />
-    <TypeScriptCompile Include="ClientApp\src\components\GridDeck.tsx" />
-    <TypeScriptCompile Include="ClientApp\src\components\Introduction.tsx" />
-    <TypeScriptCompile Include="ClientApp\src\components\NavMenu.tsx" />
+    <ProjectReference Include="..\IdentityServer\IdentityServer.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -98,30 +54,8 @@
     </EmbeddedResource>
   </ItemGroup>
 
-  <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
-    <!-- Ensure Node.js is installed -->
-    <Exec Command="node --version" ContinueOnError="true">
-      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
-    </Exec>
-    <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
-    <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
-  </Target>
-
-  <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
-    <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build" />
-
-    <!-- Include the newly-built files in the publish output -->
-    <ItemGroup>
-      <DistFiles Include="$(SpaRoot)build\**; $(SpaRoot)build-ssr\**" />
-      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
-        <RelativePath>%(DistFiles.Identity)</RelativePath>
-        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      </ResolvedFileToPublish>
-    </ItemGroup>
-  </Target>
-
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+  
 </Project>

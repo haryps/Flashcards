@@ -4,14 +4,13 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Flashcards.Data;
-using Flashcards.Models;
+using IdentityServer.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace Flashcards.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class DeckController : ControllerBase
@@ -34,6 +33,7 @@ namespace Flashcards.Controllers
             yield return new Card() { DeckId = 1, Word = "abate", Definition = "to lessen to subside" };
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<List<Progression>>> GetCards(int id)
         {

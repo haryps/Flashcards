@@ -1,4 +1,5 @@
-﻿using Flashcards.Models;
+﻿using IdentityServer.Data;
+using IdentityServer.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
