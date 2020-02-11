@@ -199,6 +199,11 @@ export class AuthorizeService {
             scope: "openid profile api1",
             post_logout_redirect_uri: "http://localhost:5003",
         };
+        config.automaticSilentRenew = true;
+        config.includeIdTokenInSilentRenew = true;
+        config.userStore = new WebStorageStateStore({
+            prefix: ApplicationName
+        });
 
         this.userManager = new UserManager(config);
 

@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Flashcards.Controllers
 {
+
     [ApiController]
     [Route("api/[controller]")]
     public class DeckController : ControllerBase
@@ -26,11 +27,10 @@ namespace Flashcards.Controllers
             _flashcardRepository = flashcardRepository;
         }
 
-        [HttpGet]
-        public IEnumerable<Card> Get()
+        [HttpGet("DeckNum")]
+        public int DeckNum()
         {
-            yield return new Card() { DeckId = 1, Word = "abacus", Definition = "frame with balls for calculating" };
-            yield return new Card() { DeckId = 1, Word = "abate", Definition = "to lessen to subside" };
+            return AppConst.DECKNUMS;
         }
 
         [Authorize]

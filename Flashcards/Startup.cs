@@ -1,5 +1,6 @@
 using Flashcards.Controllers;
 using Flashcards.Data;
+using IdentityServer.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,6 +28,9 @@ namespace Flashcards
         {
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddSingleton<IVocabulary, Vocabularies>();
             services.AddTransient<IFlashcardRepository, FlashcardRepository>();
