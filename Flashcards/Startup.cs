@@ -47,9 +47,9 @@ namespace Flashcards
             services.AddCors(options =>
             {
                 // this defines a CORS policy called "default"
-                options.AddPolicy("default", policy =>
+                options.AddPolicy("spaclient", policy =>
                 {
-                    policy.WithOrigins("http://localhost:5003")
+                    policy.WithOrigins("https://localhost:44337")
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });

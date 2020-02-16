@@ -48,17 +48,17 @@ export const actionCreators = {
         console.log(deckId);
 
         if (appState && appState.deck) {
-            authService.getAccessToken().then(token => {
-                console.log(token);
-                const url = 'api/deck/' + deckId;
-                fetch(url, {
-                    headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
-                })
-                    .then(response => response.json() as Promise<Card[]>)
-                    .then(data => {
-                        dispatch({ type: 'REQUEST_DECK', deckId: deckId, deck: data });
-                    });
-            });
+            //authService.getAccessToken().then(token => {
+            //    console.log(token);
+            //    const url = 'api/deck/' + deckId;
+            //    fetch(url, {
+            //        headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
+            //    })
+            //        .then(response => response.json() as Promise<Card[]>)
+            //        .then(data => {
+            //            dispatch({ type: 'REQUEST_DECK', deckId: deckId, deck: data });
+            //        });
+            //});
         }
     }
 };

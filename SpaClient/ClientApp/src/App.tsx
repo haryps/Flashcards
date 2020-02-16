@@ -13,9 +13,8 @@ import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
 export default () => (
     <Layout>
         <Route exact path='/' component={Flashcards} />
-        <AuthorizeRoute path='/flashcards' component={Flashcards} />
-        <AuthorizeRoute path='/deck/:id?' component={Deck} />
-        <AuthorizeRoute path='/fetch-data/:startDateIndex?' component={FetchData} />
-        <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
+        <Route path='/flashcards' component={Flashcards} />
+        <Route path='/deck/:id?' component={Deck} />
+        <Route path='/fetch-data/:startDateIndex?' component={FetchData} />
     </Layout>
 );

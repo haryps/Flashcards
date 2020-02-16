@@ -43,9 +43,10 @@ namespace ClientApp
             }
 
             app.UseHttpsRedirection();
-            app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+
+            app.UseRouting();
 
             app.UseSpa(spa =>
             {

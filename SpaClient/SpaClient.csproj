@@ -5,8 +5,12 @@
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <IsPackable>false</IsPackable>
-    <SpaRoot>SpaClient\</SpaRoot>
+    <SpaRoot>ClientApp\</SpaRoot>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,46 +25,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ClientApp\src\components\api-authorization\ApiAuthorizationConstants.js" />
-    <None Remove="ClientApp\src\components\api-authorization\ApiAuthorizationRoutes.js" />
-    <None Remove="ClientApp\src\components\api-authorization\AuthorizeRoute.js" />
-    <None Remove="ClientApp\src\components\api-authorization\AuthorizeService.js" />
-    <None Remove="ClientApp\src\components\api-authorization\Login.js" />
-    <None Remove="ClientApp\src\components\api-authorization\LoginMenu.js" />
-    <None Remove="ClientApp\src\components\api-authorization\Logout.js" />
-    <None Remove="ClientApp\src\components\Deck.tsx" />
     <None Remove="ClientApp\src\components\Flashcards.tsx" />
-    <None Remove="ClientApp\src\components\Grid.tsx" />
-    <None Remove="ClientApp\src\components\GridDeck.tsx" />
-    <None Remove="ClientApp\src\components\Introduction.tsx" />
-    <None Remove="ClientApp\src\components\NavMenu.tsx" />
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\src\components\api-authorization\ApiAuthorizationConstants.js" />
-    <TypeScriptCompile Include="ClientApp\src\components\api-authorization\ApiAuthorizationRoutes.js" />
-    <TypeScriptCompile Include="ClientApp\src\components\api-authorization\AuthorizeRoute.js" />
-    <TypeScriptCompile Include="ClientApp\src\components\api-authorization\AuthorizeService.js" />
-    <TypeScriptCompile Include="ClientApp\src\components\api-authorization\Login.js" />
-    <TypeScriptCompile Include="ClientApp\src\components\api-authorization\LoginMenu.js" />
-    <TypeScriptCompile Include="ClientApp\src\components\api-authorization\Logout.js" />
-    <TypeScriptCompile Include="ClientApp\src\components\Deck.tsx">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="ClientApp\src\components\Flashcards.tsx">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="ClientApp\src\components\Grid.tsx" />
-    <TypeScriptCompile Include="ClientApp\src\components\GridDeck.tsx">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="ClientApp\src\components\Introduction.tsx">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="ClientApp\src\components\NavMenu.tsx">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\components\Flashcards.tsx" />
   </ItemGroup>
+
+  <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
+    <!-- Ensure Node.js is installed -->
+    <Exec Command="node --version" ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+    </Exec>
+    <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+    <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+  </Target>
 
   <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
     <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
@@ -77,5 +57,21 @@
       </ResolvedFileToPublish>
     </ItemGroup>
   </Target>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <TypeScriptTarget>ES2015</TypeScriptTarget>
+    <TypeScriptJSXEmit>React</TypeScriptJSXEmit>
+    <TypeScriptModuleKind>ES6</TypeScriptModuleKind>
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
+    <TypeScriptOutFile />
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptSourceMap>True</TypeScriptSourceMap>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
+  </PropertyGroup>
 
 </Project>

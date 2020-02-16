@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Flashcards.Data;
 using IdentityServer.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -27,6 +28,7 @@ namespace Flashcards.Controllers
             _flashcardRepository = flashcardRepository;
         }
 
+        [EnableCors("spaclient")]
         [HttpGet("DeckNum")]
         public int DeckNum()
         {
