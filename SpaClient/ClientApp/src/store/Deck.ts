@@ -8,10 +8,10 @@ import authService from '../components/api-authorization/AuthorizeService';
 export interface DeckState {
     deckId: number;
     cards: Card[];
+    isFrontCard: boolean;
 }
 
 export interface Card {
-    deckId: number;
     word: string;
     definition: string;
 }
@@ -45,20 +45,33 @@ export const actionCreators = {
     requestDeck: (deckId: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
 
         const appState = getState();
-        console.log(deckId);
+        //console.log(deckId);
 
         if (appState && appState.deck) {
-            //authService.getAccessToken().then(token => {
-            //    console.log(token);
-            //    const url = 'api/deck/' + deckId;
-            //    fetch(url, {
-            //        headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
-            //    })
-            //        .then(response => response.json() as Promise<Card[]>)
-            //        .then(data => {
-            //            dispatch({ type: 'REQUEST_DECK', deckId: deckId, deck: data });
-            //        });
-            //});
+
+            var signedIn: boolean = false;  //Later, use authService to check whether the user is already signed in or not
+            if (signedIn) {
+                //authService.getAccessToken().then(token => {
+                //    console.log(token);
+                //    const url = 'api/deck/' + deckId;
+                //    fetch(url, {
+                //        headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
+                //    })
+                //        .then(response => response.json() as Promise<Card[]>)
+                //        .then(data => {
+                //            dispatch({ type: 'REQUEST_DECK', deckId: deckId, deck: data });
+                //        });
+                //});
+            } else {
+                const url = 'https://localhost:44393/api/deck/decknum/' + deckId;
+                fetch(url, { mode: 'cors', credentials: 'same-origin' })
+                    .then(response => response.json() as Promise<Card[]>)
+                    .then(data => {
+                        //console.log(data);
+                        dispatch({ type: 'REQUEST_DECK', deckId: deckId, deck: data });
+                    });
+            }
+
         }
     }
 };
@@ -66,7 +79,7 @@ export const actionCreators = {
 // ----------------
 // REDUCER - For a given state and action, returns the new state. To support time travel, this must not mutate the old state.
 
-const unloadedState: DeckState = { cards: [], deckId: 1 };
+const unloadedState: DeckState = { cards: [], deckId: 1, isFrontCard: true };
 
 export const reducer: Reducer<DeckState> = (state: DeckState | undefined, incomingAction: Action): DeckState => {
     if (state === undefined) {
@@ -78,13 +91,15 @@ export const reducer: Reducer<DeckState> = (state: DeckState | undefined, incomi
         case 'REQUEST_DECK':
             return {
                 deckId: action.deckId,
-                cards: state.cards
+                cards: state.cards,
+                isFrontCard: state.isFrontCard
             };
         case 'RECEIVE_DECK':
             if (action.deckId === state.deckId) {
                 return {
                     deckId: action.deckId,
-                    cards: action.cards,
+                    cards: state.cards,
+                    isFrontCard: state.isFrontCard
                 };
             }
             break;

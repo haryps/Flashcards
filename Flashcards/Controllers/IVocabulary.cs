@@ -5,6 +5,6 @@ namespace Flashcards.Controllers
 {
     public interface IVocabulary
     {
-        IEnumerable<Tuple<string, string>> GetVocabs(int deck);
+        IEnumerable<Card> GetVocabs(int deck);
     }
 }

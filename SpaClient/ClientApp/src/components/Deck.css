@@ -1,0 +1,3 @@
+﻿.fa-remove:before, .fa-close:before, .fa-times:before {
+    content: "";
+}

@@ -35,6 +35,15 @@ namespace Flashcards.Controllers
             return AppConst.DECKNUMS;
         }
 
+        [EnableCors("spaclient")]
+        [HttpGet("decknum/{id}")]
+        public IEnumerable<Card> GetDeckNumCollection(int id)
+        {
+            var cards = _vocabulary.GetVocabs(id);
+
+            return cards;
+        }
+
         [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<List<Progression>>> GetCards(int id)

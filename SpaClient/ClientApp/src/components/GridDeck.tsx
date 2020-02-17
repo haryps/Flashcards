@@ -18,11 +18,11 @@ export class GridDeck extends React.PureComponent<Props> {
                             <text x="50%" y="50%" fontWeight="bold" fill="white" fontSize="20px"
                                 textAnchor="middle"
                                 dominantBaseline="middle">
-                                Thumbnail
+                                Deck {this.props.index}
                             </text>
                         </svg>
                         <div className="card-body">
-                            <p className="card-text"> is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                            <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                             <div className="d-flex justify-content-between align-items-center">
                                 <div className="btn-group">
                                     <Link to={`/deck/${this.props.index}`} className="btn btn-sm btn-outline-secondary">

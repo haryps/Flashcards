@@ -15,12 +15,13 @@ class Flashcards extends React.PureComponent<{}, FlashcardsState> {
 
     public async componentDidMount() {
         const url = 'https://localhost:44393/api/deck/decknum';
-        const response = await fetch(url, { mode: 'cors', credentials: 'same-origin' });
-        const decknum = await response.json() as number;
+        fetch(url, { mode: 'cors', credentials: 'same-origin' })
+            .then(response => response.json() as Promise<number>)
+            .then(number => {
+                console.log('Flashcards decknum:' + number);
 
-        console.log('Flashcards decknum:' + decknum);
-
-        await this.setState({ decknum: decknum });
+                this.setState({ decknum: number })
+            })
     }
 
     public render() {

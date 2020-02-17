@@ -4,62 +4,82 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { ApplicationState } from '../store';
 import * as DeckStore from '../store/Deck';
+import './Deck.css';
+import { MouseEvent } from 'react';
 
 type DeckProps =
     DeckStore.DeckState &
     typeof DeckStore.actionCreators &
-    RouteComponentProps<{ id: string}>;
+    RouteComponentProps<{ id: string }>;
 
-class Deck extends React.PureComponent<DeckProps> {
+interface DeckState {
+    isFrontCard: boolean;
+}
+
+class Deck extends React.PureComponent<DeckProps, DeckState> {
+    constructor(props: DeckProps) {
+        super(props)
+        this.state = {
+            isFrontCard: true
+        };
+
+        this.handleClick = this.handleClick.bind(this);
+    }
 
     public componentDidMount() {
         this.props.requestDeck(parseInt(this.props.match.params.id, 10));
     }
 
-    public componentDidUpdate() {
-        this.props.requestDeck(parseInt(this.props.match.params.id, 10));
+    handleClick() {
+        this.setState({ isFrontCard: !this.state.isFrontCard });
+        console.log('isFrontCard: ' + this.state.isFrontCard);
     }
 
     public render() {
-        return (
-            <React.Fragment>
+
+        const isFrontCard = this.state.isFrontCard;
+        if (isFrontCard) {
+            return (
+                <React.Fragment>
                     <div className="card text-center">
-                        <div className="card-header">
-                            Featured
-                        </div>
                         <div className="card-body">
                             <h5 className="card-title">Special title treatment</h5>
                             <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                            <a href="#" className="btn btn-primary">Click to see the meaning</a>
                         </div>
                         <div className="card-footer text-muted">
-                            2 days ago
+                            <button className="btn btn-primary" onClick={this.handleClick}>Click to see meaning →</button>
                         </div>
                     </div>
+                </React.Fragment>
+            );
+        } else {
+            return (
+                <React.Fragment>
                     <div className="card text-center">
-                        <div className="card-header">
-                            Featured
-                        </div>
                         <div className="card-body">
                             <h5 className="card-title">Special title treatment</h5>
                             <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                            <a href="#" className="btn btn-primary">Click to see the meaning</a>
                         </div>
                         <div className="card-footer text-muted">
-                            2 days ago
+                            <button className="btn btn-primary" onClick={this.handleClick}>&#10003; I knew this word</button>
+                        </div>
+                        <div className="card-footer text-muted">
+                            <button className="btn btn-primary" onClick={this.handleClick}>&#10005; I didn't know this word</button>
                         </div>
                     </div>
-            </React.Fragment>
-        );
+                </React.Fragment>
+            );
+        }
+
     }
 };
 
-const mapStateToProps = (state: ApplicationState) => {     
-    //deck: state.deck
-};
+//const mapStateToProps = (state: ApplicationState) => {
+//    deck: state.deck
+//};
 
 export default connect(
-    mapStateToProps,
-    //(state: ApplicationState) => state.deck,
+    //mapStateToProps,
+    null,
     DeckStore.actionCreators
 )(Deck as any);

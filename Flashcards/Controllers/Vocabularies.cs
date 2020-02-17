@@ -9,7 +9,7 @@ namespace Flashcards.Controllers
 {
     public class Vocabularies : IVocabulary
     {
-        private Dictionary<int, IEnumerable<Tuple<string, string>>> VocabDictionary;
+        private Dictionary<int, IEnumerable<Card>> VocabDictionary;
 
         public Vocabularies()
         {
@@ -17,8 +17,8 @@ namespace Flashcards.Controllers
             {                
                 sr.ReadLine();  //Skip the header
 
-                List<Tuple<string, string>> vocabs = new List<Tuple<string, string>>();
-                VocabDictionary = new Dictionary<int, IEnumerable<Tuple<string, string>>>();
+                List<Card> vocabs = new List<Card>();
+                VocabDictionary = new Dictionary<int, IEnumerable<Card>>();
 
                 int counter = 0;
                 while (!sr.EndOfStream)
@@ -26,7 +26,7 @@ namespace Flashcards.Controllers
                     var line = sr.ReadLine();
                     var values = line.Split(',');
 
-                    vocabs.Add(new Tuple<string, string>(values[0].Trim(), values[1].Trim()));
+                    vocabs.Add(new Card() { Word = values[0].Trim(), Definition = values[1].Trim() });
 
                     counter++;
                 }
@@ -34,7 +34,7 @@ namespace Flashcards.Controllers
                 int cards = vocabs.Count / AppConst.DECKNUMS + 1;
                 for (int i = 0; i < AppConst.DECKNUMS; i++)
                 {
-                    List<Tuple<string, string>> segment = new List<Tuple<string, string>>();
+                    List<Card> segment = new List<Card>();
 
                     int startIndex = i * cards;
                     for (int j = startIndex; j < vocabs.Count && j < startIndex + cards; j++)
@@ -47,7 +47,7 @@ namespace Flashcards.Controllers
             }
         }
 
-        public IEnumerable<Tuple<string, string>> GetVocabs(int deck)
+        public IEnumerable<Card> GetVocabs(int deck)
         {
             return VocabDictionary[deck];
         }
