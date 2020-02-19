@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { ApplicationState } from '../store';
 import * as DeckStore from '../store/Deck';
-import './Deck.css';
 import { MouseEvent } from 'react';
+import './Deck.css';
 
 type DeckProps =
     DeckStore.DeckState &
@@ -38,12 +38,15 @@ class Deck extends React.PureComponent<DeckProps, DeckState> {
     public render() {
 
         const isFrontCard = this.state.isFrontCard;
+        const className = this.state.isFrontCard ? 'card text-center front-card' : 'card text-center back-card';
+        let card;
+
         if (isFrontCard) {
-            return (
+            card = (
                 <React.Fragment>
-                    <div className="card text-center">
+                    <div className={className} >
                         <div className="card-body">
-                            <h5 className="card-title">Special title treatment</h5>
+                            <h5 className="card-title">Front Card</h5>
                             <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
                         </div>
                         <div className="card-footer text-muted">
@@ -53,11 +56,11 @@ class Deck extends React.PureComponent<DeckProps, DeckState> {
                 </React.Fragment>
             );
         } else {
-            return (
+            card = (
                 <React.Fragment>
-                    <div className="card text-center">
+                    <div className={className}>
                         <div className="card-body">
-                            <h5 className="card-title">Special title treatment</h5>
+                            <h5 className="card-title">Back Card</h5>
                             <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
                         </div>
                         <div className="card-footer text-muted">
@@ -70,6 +73,14 @@ class Deck extends React.PureComponent<DeckProps, DeckState> {
                 </React.Fragment>
             );
         }
+
+        return (
+            <div className="card-container">
+                <div className="card-inner">
+                    {card}
+                </div>
+            </div>
+        );
 
     }
 };

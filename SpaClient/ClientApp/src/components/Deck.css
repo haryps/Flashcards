@@ -1,3 +1,28 @@
-﻿.fa-remove:before, .fa-close:before, .fa-times:before {
-    content: "";
+﻿.card-container {
+    background-color: transparent;
+    perspective: 1000px;
+}
+
+.card-inner {
+    /*position: relative;*/
+    /*width: 100%;
+    height: 100%;*/
+    text-align: center;
+    transition: transform 0.5s;
+    transform-style: preserve-3d;
+    /*box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);*/
+}
+
+.card-container:active .card-inner {
+    transform: rotateY(180deg);
+}
+
+.front-card,
+.back-card {
+    /*position: absolute;*/
+    height: 50%;
+    width: 50%;
+    transform: translate(50%, 0%);
+    -webkit-backface-visibility: visible;
+    backface-visibility: visible;
 }
