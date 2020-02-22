@@ -16,7 +16,7 @@ interface DeckState {
     isFrontCard: boolean;
 }
 
-class Deck extends React.PureComponent<DeckProps, DeckState> {
+class Deck extends React.PureComponent<DeckProps> {
     constructor(props: DeckProps) {
         super(props)
         this.state = {
@@ -27,18 +27,19 @@ class Deck extends React.PureComponent<DeckProps, DeckState> {
     }
 
     public componentDidMount() {
-        this.props.requestDeck(parseInt(this.props.match.params.id, 10));
+        const deckId = parseInt(this.props.match.params.id, 10);
+        this.props.requestDeck(deckId);
     }
 
     handleClick() {
-        this.setState({ isFrontCard: !this.state.isFrontCard });
-        console.log('isFrontCard: ' + this.state.isFrontCard);
+        this.setState({ isFrontCard: !this.props.isFrontCard });
+        console.log('isFrontCard: ' + this.props.isFrontCard);
     }
 
     public render() {
 
-        const isFrontCard = this.state.isFrontCard;
-        const className = this.state.isFrontCard ? 'card text-center front-card' : 'card text-center back-card';
+        const isFrontCard = this.props.isFrontCard;
+        const className = this.props.isFrontCard ? 'card text-center front-card' : 'card text-center back-card';
         let card;
 
         if (isFrontCard) {
@@ -46,8 +47,7 @@ class Deck extends React.PureComponent<DeckProps, DeckState> {
                 <React.Fragment>
                     <div className={className} >
                         <div className="card-body">
-                            <h5 className="card-title">Front Card</h5>
-                            <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                            <h5 className="card-title">{this.props.currentCard.word}</h5>
                         </div>
                         <div className="card-footer text-muted">
                             <button className="btn btn-primary" onClick={this.handleClick}>Click to see meaning →</button>
@@ -60,8 +60,8 @@ class Deck extends React.PureComponent<DeckProps, DeckState> {
                 <React.Fragment>
                     <div className={className}>
                         <div className="card-body">
-                            <h5 className="card-title">Back Card</h5>
-                            <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                            <h5 className="card-title">{this.props.currentCard.word}</h5>
+                            <p className="card-text">{this.props.currentCard.definition}</p>
                         </div>
                         <div className="card-footer text-muted">
                             <button className="btn btn-primary" onClick={this.handleClick}>&#10003; I knew this word</button>
@@ -85,12 +85,7 @@ class Deck extends React.PureComponent<DeckProps, DeckState> {
     }
 };
 
-//const mapStateToProps = (state: ApplicationState) => {
-//    deck: state.deck
-//};
-
 export default connect(
-    //mapStateToProps,
-    null,
+    (state: ApplicationState) => state.deck,
     DeckStore.actionCreators
 )(Deck as any);

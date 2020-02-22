@@ -9,6 +9,7 @@ export interface DeckState {
     deckId: number;
     cards: Card[];
     isFrontCard: boolean;
+    currentCard: Card;
 }
 
 export interface Card {
@@ -24,18 +25,20 @@ export interface Card {
 export interface RequestDeckAction {
     type: 'REQUEST_DECK';
     deckId: number;
-    deck: Card[];
+    cards: Card[];
+    //isFrontCard: boolean;
+    currentCard: Card;
 }
 
-export interface ReceiveDeckAction {
-    type: 'RECEIVE_DECK';
+export interface GetCurrentCard {
+    type: 'GET_CURRENT_CARD';
     deckId: number;
-    cards: Card[];
+    currentCard: Card;
 }
 
 // Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
 // declared type strings (and not any other arbitrary string).
-export type KnownAction = RequestDeckAction | ReceiveDeckAction;
+export type KnownAction = RequestDeckAction | GetCurrentCard;
 
 // ----------------
 // ACTION CREATORS - These are functions exposed to UI components that will trigger a state transition.
@@ -67,19 +70,56 @@ export const actionCreators = {
                 fetch(url, { mode: 'cors', credentials: 'same-origin' })
                     .then(response => response.json() as Promise<Card[]>)
                     .then(data => {
-                        //console.log(data);
-                        dispatch({ type: 'REQUEST_DECK', deckId: deckId, deck: data });
+
+                        let currentCard = data[0];
+                        //Find the first word whose meaning is not known
+                        if (typeof (Storage) !== "undefined") {
+                            let value = localStorage.getItem(`deck${deckId}_progress`);
+                            if (value) {
+                                let i = 0;
+                            } else {
+                                currentCard = data[0];
+                            }
+                        } else {
+                            throw "Sorry, your browser does not support web storage...";
+                        }
+
+                        dispatch({ type: 'REQUEST_DECK', deckId: deckId, cards: data, currentCard: currentCard });
                     });
             }
 
         }
+    },
+
+    getCurrentCard: (deckId: number, cards: Card[]): AppThunkAction<KnownAction> => (dispatch, getState) => {
+        const appState = getState();
+        if (appState && appState.deck) {
+
+            let currentCard = cards[0];
+            //Find the first word whose meaning is not known
+            if (typeof (Storage) !== "undefined") {
+                let value = localStorage.getItem(`deck${deckId}_progress`);
+                if (value) {
+                    let i = 0;
+                } else {
+                    currentCard = cards[0];
+                }
+            } else {
+                throw "Sorry, your browser does not support web storage...";
+            }
+
+            dispatch({ type: 'GET_CURRENT_CARD', deckId: deckId, currentCard: currentCard });
+        }
+
     }
 };
 
 // ----------------
 // REDUCER - For a given state and action, returns the new state. To support time travel, this must not mutate the old state.
 
-const unloadedState: DeckState = { cards: [], deckId: 1, isFrontCard: true };
+const unloadedState: DeckState = {
+    cards: [], deckId: 1, isFrontCard: true, currentCard: { definition: '', word: '' }
+};
 
 export const reducer: Reducer<DeckState> = (state: DeckState | undefined, incomingAction: Action): DeckState => {
     if (state === undefined) {
@@ -91,19 +131,18 @@ export const reducer: Reducer<DeckState> = (state: DeckState | undefined, incomi
         case 'REQUEST_DECK':
             return {
                 deckId: action.deckId,
-                cards: state.cards,
-                isFrontCard: state.isFrontCard
+                cards: action.cards,
+                isFrontCard: state.isFrontCard,
+                currentCard: action.currentCard,
             };
-        case 'RECEIVE_DECK':
-            if (action.deckId === state.deckId) {
-                return {
-                    deckId: action.deckId,
-                    cards: state.cards,
-                    isFrontCard: state.isFrontCard
-                };
-            }
-            break;
+        case 'GET_CURRENT_CARD':
+            return {
+                deckId: action.deckId,
+                cards: state.cards,
+                isFrontCard: state.isFrontCard,
+                currentCard: action.currentCard,
+            };
+        default:
+            return state;
     }
-
-    return state;
 };
