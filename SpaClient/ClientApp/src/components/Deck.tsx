@@ -12,10 +12,6 @@ type DeckProps =
     typeof DeckStore.actionCreators &
     RouteComponentProps<{ id: string }>;
 
-interface DeckState {
-    isFrontCard: boolean;
-}
-
 class Deck extends React.PureComponent<DeckProps> {
     constructor(props: DeckProps) {
         super(props)
@@ -31,9 +27,24 @@ class Deck extends React.PureComponent<DeckProps> {
         this.props.requestDeck(deckId);
     }
 
-    handleClick() {
-        this.setState({ isFrontCard: !this.props.isFrontCard });
-        console.log('isFrontCard: ' + this.props.isFrontCard);
+    handleClick(event: MouseEvent) {
+
+        const innerText = event.currentTarget.innerHTML;
+        if (innerText.includes("I know this word")) {
+
+            this.props.updateProgress(this.props.deckId, this.props.cards, this.props.isFrontCard,
+                this.props.currentCard, true, this.props.progress);
+
+        } else if (innerText.includes("I don't know this word")) {
+
+            this.props.updateProgress(this.props.deckId, this.props.cards, this.props.isFrontCard,
+                this.props.currentCard, false, this.props.progress);
+
+        } else if (innerText.includes("Click to see meaning")) {
+
+            this.props.flipTheCard(this.props.isFrontCard, this.props.currentCard);
+
+        }
     }
 
     public render() {
@@ -61,13 +72,13 @@ class Deck extends React.PureComponent<DeckProps> {
                     <div className={className}>
                         <div className="card-body">
                             <h5 className="card-title">{this.props.currentCard.word}</h5>
-                            <p className="card-text">{this.props.currentCard.definition}</p>
+                            <p className="card-text"><b>definition: </b>{this.props.currentCard.definition}</p>
                         </div>
                         <div className="card-footer text-muted">
-                            <button className="btn btn-primary" onClick={this.handleClick}>&#10003; I knew this word</button>
+                            <button className="btn btn-primary" onClick={this.handleClick}>&#10003; I know this word</button>
                         </div>
                         <div className="card-footer text-muted">
-                            <button className="btn btn-primary" onClick={this.handleClick}>&#10005; I didn't know this word</button>
+                            <button className="btn btn-primary" onClick={this.handleClick}>&#10005; I don't know this word</button>
                         </div>
                     </div>
                 </React.Fragment>
