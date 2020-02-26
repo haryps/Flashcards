@@ -1,28 +1,38 @@
 ﻿.card-container {
     background-color: transparent;
-    perspective: 1000px;
+    /*perspective: 2000px;*/
+    width: 50%;
+    height: 50%;
+    margin: auto;
+    border: 1px solid #CCC;
 }
 
 .card-inner {
-    /*position: relative;*/
-    /*width: 100%;
-    height: 100%;*/
     text-align: center;
-    transition: transform 0.5s;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    transition: transform 1s;
     transform-style: preserve-3d;
-    /*box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);*/
 }
 
-.card-container:active .card-inner {
+.card-inner.is-flipped {
     transform: rotateY(180deg);
 }
 
-.front-card,
-.back-card {
-    /*position: absolute;*/
-    height: 50%;
-    width: 50%;
-    transform: translate(50%, 0%);
-    -webkit-backface-visibility: visible;
-    backface-visibility: visible;
+.card__face {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.card__face--front-card {
+    
+}
+
+.card__face--back-card {
+    transform: rotateY(180deg);
 }

@@ -50,7 +50,13 @@ class Deck extends React.PureComponent<DeckProps> {
     public render() {
 
         const isFrontCard = this.props.isFrontCard;
-        const className = this.props.isFrontCard ? 'card text-center front-card' : 'card text-center back-card';
+
+        const className = isFrontCard
+            ? 'card card__face card__face--front-card'
+            : 'card card__face card__face--back-card';
+
+        const innerCardClassName = isFrontCard ? 'card-inner' : 'card-inner is-flipped';
+
         let card;
 
         if (isFrontCard) {
@@ -87,7 +93,7 @@ class Deck extends React.PureComponent<DeckProps> {
 
         return (
             <div className="card-container">
-                <div className="card-inner">
+                <div className={innerCardClassName}>
                     {card}
                 </div>
             </div>
