@@ -55,7 +55,7 @@ class Deck extends React.PureComponent<DeckProps> {
             ? 'card card__face card__face--front-card'
             : 'card card__face card__face--back-card';
 
-        const innerCardClassName = isFrontCard ? 'card-inner' : 'card-inner is-flipped';
+        const innerCardClassName = isFrontCard ? 'card-inner w3-animate-right' : 'card-inner is-flipped';
 
         let card;
 

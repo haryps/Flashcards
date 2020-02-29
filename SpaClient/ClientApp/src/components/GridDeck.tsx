@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 interface Props {
-    index: number;
+    deckId: number;
+    currentValue: number;
+    maxValue: number;
 }
 
 export class GridDeck extends React.PureComponent<Props> {
@@ -13,20 +15,23 @@ export class GridDeck extends React.PureComponent<Props> {
             <React.Fragment>
                 <div className="col-md-4">
                     <div className="card mb-4 box-shadow">
-                        <svg height="225px" width="100%">
-                            <rect fill="#55595c" x="0" y="0" height="225px" width="100%"></rect>
+                        <svg height="100%" width="100%">
+                            <rect fill="#55595c" x="0" y="0" height="100%" width="100%"></rect>
                             <text x="50%" y="50%" fontWeight="bold" fill="white" fontSize="20px"
                                 textAnchor="middle"
                                 dominantBaseline="middle">
-                                Deck {this.props.index}
+                                Deck {this.props.deckId}
                             </text>
                         </svg>
                         <div className="card-body">
-                            <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                            <p style={{ marginBottom: "5px" }}>{this.props.currentValue} of {this.props.maxValue} words mastered</p>
+                            <div className="progress" style={{ marginTop: "5px", marginBottom: "10px" }}>
+                                <div className="progress-bar bg-success" role="progressbar" style={{ width: "0%" }} aria-valuenow={0} aria-valuemin={0} aria-valuemax={100}></div>
+                            </div>
                             <div className="d-flex justify-content-between align-items-center">
                                 <div className="btn-group">
-                                    <Link to={`/deck/${this.props.index}`} className="btn btn-sm btn-outline-secondary">
-                                        Practice this deck {this.props.index} →
+                                    <Link to={`/deck/${this.props.deckId}`} className="btn btn-sm btn-outline-secondary">
+                                        Practice this deck →
                                     </Link>
                                 </div>
                             </div>

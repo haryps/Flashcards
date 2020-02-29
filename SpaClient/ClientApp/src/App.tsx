@@ -15,6 +15,5 @@ export default () => (
         <Route exact path='/' component={Flashcards} />
         <Route path='/flashcards' component={Flashcards} />
         <Route path='/deck/:id?' component={Deck} />
-        <Route path='/fetch-data/:startDateIndex?' component={FetchData} />
     </Layout>
 );

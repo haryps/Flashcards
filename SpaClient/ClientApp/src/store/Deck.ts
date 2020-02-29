@@ -71,7 +71,6 @@ export const actionCreators = {
     requestDeck: (deckId: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
 
         const appState = getState();
-        //console.log(deckId);
 
         if (appState && appState.deck) {
 
@@ -189,7 +188,7 @@ export const actionCreators = {
                             }
                         }
                         let nextCard: Card = progress.understandings[0].card;
-                        for (let j = currentUnderstandingIndex; j < progress.understandings.length; j++) {
+                        for (let j = currentUnderstandingIndex + 1; j < progress.understandings.length; j++) {
                             if (!progress.understandings[j].known) {
                                 nextCard = progress.understandings[j].card;
                                 break;

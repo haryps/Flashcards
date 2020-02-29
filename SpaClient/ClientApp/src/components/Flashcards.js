@@ -18,7 +18,9 @@ class Flashcards extends React.PureComponent {
     constructor() {
         super(...arguments);
         this.state = {
-            decknum: 0
+            decknum: 0,
+            currentValue: [],
+            maxValue: []
         };
     }
     componentDidMount() {
@@ -29,6 +31,35 @@ class Flashcards extends React.PureComponent {
                 .then(number => {
                 console.log('Flashcards decknum:' + number);
                 this.setState({ decknum: number });
+                let currentValue = 0;
+                let maxValue = 0;
+                let currentValueArray = new Array(number);
+                let maxValueArray = new Array(number);
+                if (typeof (Storage) !== "undefined") {
+                    for (let i = 1; i <= this.state.decknum; i++) {
+                        let value = localStorage.getItem(`deck${i}_progress`);
+                        if (value) {
+                            console.log(value);
+                            let progress = JSON.parse(value);
+                            progress.understandings.map(understanding => {
+                                if (understanding.known) {
+                                    currentValue++;
+                                }
+                            });
+                            maxValue = progress.understandings.length;
+                            currentValueArray[i] = currentValue;
+                            maxValueArray[i] = maxValue;
+                        }
+                        else {
+                            currentValueArray[i] = 0;
+                            maxValueArray[i] = 0; // Fix this
+                        }
+                    }
+                    this.setState({ currentValue: currentValueArray, maxValue: maxValueArray });
+                }
+                else {
+                    throw "Sorry, your browser does not support web storage...";
+                }
             });
         });
     }
@@ -36,7 +67,7 @@ class Flashcards extends React.PureComponent {
         let decks = [];
         console.log('state decknum:' + this.state.decknum);
         for (let i = 1; i <= this.state.decknum; i++) {
-            decks.push(React.createElement(GridDeck, { key: i, index: i }));
+            decks.push(React.createElement(GridDeck, { key: i, deckId: i, currentValue: this.state.currentValue[i], maxValue: this.state.maxValue[i] }));
         }
         return (React.createElement("main", { role: "main" },
             React.createElement(Introduction, null),
