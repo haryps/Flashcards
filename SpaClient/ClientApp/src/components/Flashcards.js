@@ -20,7 +20,8 @@ class Flashcards extends React.PureComponent {
         this.state = {
             decknum: 0,
             currentValue: [],
-            maxValue: []
+            maxValue: [],
+            vocabulary: [],
         };
     }
     componentDidMount() {
@@ -28,38 +29,9 @@ class Flashcards extends React.PureComponent {
             const url = 'https://localhost:44393/api/deck/decknum';
             fetch(url, { mode: 'cors', credentials: 'same-origin' })
                 .then(response => response.json())
-                .then(number => {
-                console.log('Flashcards decknum:' + number);
-                this.setState({ decknum: number });
-                let currentValue = 0;
-                let maxValue = 0;
-                let currentValueArray = new Array(number);
-                let maxValueArray = new Array(number);
-                if (typeof (Storage) !== "undefined") {
-                    for (let i = 1; i <= this.state.decknum; i++) {
-                        let value = localStorage.getItem(`deck${i}_progress`);
-                        if (value) {
-                            console.log(value);
-                            let progress = JSON.parse(value);
-                            progress.understandings.map(understanding => {
-                                if (understanding.known) {
-                                    currentValue++;
-                                }
-                            });
-                            maxValue = progress.understandings.length;
-                            currentValueArray[i] = currentValue;
-                            maxValueArray[i] = maxValue;
-                        }
-                        else {
-                            currentValueArray[i] = 0;
-                            maxValueArray[i] = 0; // Fix this
-                        }
-                    }
-                    this.setState({ currentValue: currentValueArray, maxValue: maxValueArray });
-                }
-                else {
-                    throw "Sorry, your browser does not support web storage...";
-                }
+                .then(vocabulary => {
+                this.setCurrentProgress(vocabulary);
+                //this.requestDeck(vocabulary);
             });
         });
     }
@@ -67,7 +39,7 @@ class Flashcards extends React.PureComponent {
         let decks = [];
         console.log('state decknum:' + this.state.decknum);
         for (let i = 1; i <= this.state.decknum; i++) {
-            decks.push(React.createElement(GridDeck, { key: i, deckId: i, currentValue: this.state.currentValue[i], maxValue: this.state.maxValue[i] }));
+            decks.push(React.createElement(GridDeck, { key: i, deckId: i, currentValue: this.state.currentValue[i], maxValue: this.state.maxValue[i], cards: this.state.vocabulary[i - 1] }));
         }
         return (React.createElement("main", { role: "main" },
             React.createElement(Introduction, null),
@@ -75,6 +47,35 @@ class Flashcards extends React.PureComponent {
                 React.createElement("div", { className: "container" },
                     React.createElement("div", { className: "row" },
                         React.createElement(React.Fragment, null, decks))))));
+    }
+    setCurrentProgress(vocabulary) {
+        let currentValue = 0;
+        let maxValue = 0;
+        let currentValueArray = new Array(vocabulary.length);
+        let maxValueArray = new Array(vocabulary.length);
+        if (typeof (Storage) !== "undefined") {
+            for (let i = 1; i <= vocabulary.length; i++) {
+                let value = localStorage.getItem(`deck${i}_progress`);
+                if (value) {
+                    let progress = JSON.parse(value);
+                    progress.understandings.map(understanding => {
+                        if (understanding.known) {
+                            currentValue++;
+                        }
+                    });
+                    maxValue = progress.understandings.length;
+                    currentValueArray[i] = currentValue;
+                }
+                else {
+                    currentValueArray[i] = 0;
+                }
+                maxValueArray[i] = vocabulary[i - 1].length;
+                this.setState({ decknum: i, currentValue: currentValueArray, maxValue: maxValueArray, vocabulary: vocabulary });
+            }
+        }
+        else {
+            throw "Sorry, your browser does not support web storage...";
+        }
     }
 }
 export default connect()(Flashcards);

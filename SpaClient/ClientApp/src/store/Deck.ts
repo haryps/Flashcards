@@ -33,8 +33,8 @@ export interface Understanding {
 // They do not themselves have any side-effects; they just describe something that is going to happen.
 // Use @typeName and isActionType for type detection that works even after serialization/deserialization.
 
-export interface RequestDeckAction {
-    type: 'REQUEST_DECK';
+export interface InitDeckAction {
+    type: 'INIT_DECK';
     deckId: number;
     cards: Card[];
     currentCard: Card;
@@ -61,14 +61,14 @@ export interface UpdateProgress {
 
 // Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
 // declared type strings (and not any other arbitrary string).
-export type KnownAction = RequestDeckAction | GetCurrentCard | FlipCardState | UpdateProgress;
+export type KnownAction = InitDeckAction | GetCurrentCard | FlipCardState | UpdateProgress;
 
 // ----------------
 // ACTION CREATORS - These are functions exposed to UI components that will trigger a state transition.
 // They don't directly mutate state, but they can have external side-effects (such as loading data).
 
 export const actionCreators = {
-    requestDeck: (deckId: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
+    initDeck: (deckId: number, cards: Card[]): AppThunkAction<KnownAction> => (dispatch, getState) => {
 
         const appState = getState();
 
@@ -84,55 +84,33 @@ export const actionCreators = {
                 //    })
                 //        .then(response => response.json() as Promise<Card[]>)
                 //        .then(data => {
-                //            dispatch({ type: 'REQUEST_DECK', deckId: deckId, deck: data });
+                //            dispatch({ type: 'INIT_DECK', deckId: deckId, deck: data });
                 //        });
                 //});
             } else {
-                const url = 'https://localhost:44393/api/deck/decknum/' + deckId;
-                fetch(url, { mode: 'cors', credentials: 'same-origin' })
-                    .then(response => response.json() as Promise<Card[]>)
-                    .then(cards => {
 
-                        let currentCard = cards[0];
-                        //Find the first word whose meaning is not known
-                        if (typeof (Storage) !== "undefined") {
-                            let value = localStorage.getItem(`deck${deckId}_progress`);
-                            if (value) {
-                                let i = 0;
-                            } else {
-                                currentCard = cards[0];
-                            }
-                        } else {
-                            throw "Sorry, your browser does not support web storage...";
-                        }
+                let currentCard = cards[0];
 
-                        dispatch({ type: 'REQUEST_DECK', deckId: deckId, cards: cards, currentCard: currentCard });
-                    });
-            }
+                if (typeof (Storage) !== "undefined") {
+                    let value = localStorage.getItem(`deck${deckId}_progress`);
 
-        }
-    },
+                    if (value) {
+                        let progress: Progress = JSON.parse(value);
 
-    getCurrentCard: (deckId: number, cards: Card[]): AppThunkAction<KnownAction> => (dispatch, getState) => {
-        const appState = getState();
-        if (appState && appState.deck) {
+                        currentCard = getCurrentCard(progress, currentCard);
 
-            let currentCard = cards[0];
-            //Find the first word whose meaning is not known
-            if (typeof (Storage) !== "undefined") {
-                let value = localStorage.getItem(`deck${deckId}_progress`);
-                if (value) {
-                    let i = 0;
+                    } else {
+                        currentCard = cards[0];
+                    }
                 } else {
-                    currentCard = cards[0];
+                    throw "Sorry, your browser does not support web storage...";
                 }
-            } else {
-                throw "Sorry, your browser does not support web storage...";
+
+                dispatch({ type: 'INIT_DECK', deckId: deckId, cards: cards, currentCard: currentCard });
+
             }
 
-            dispatch({ type: 'GET_CURRENT_CARD', deckId: deckId, currentCard: currentCard });
         }
-
     },
 
     flipTheCard: (isFrontCard: boolean, currentCard: Card): AppThunkAction<KnownAction> => (dispatch, getState) => {
@@ -152,6 +130,7 @@ export const actionCreators = {
                         let value = localStorage.getItem(`deck${deckId}_progress`);
                         if (value) {
 
+                            progress = JSON.parse(value);
                             progress.understandings
                                 .map(understanding => {
                                     if (understanding.card.word === currentCard.word) {
@@ -179,25 +158,11 @@ export const actionCreators = {
 
                         localStorage.setItem(`deck${deckId}_progress`, JSON.stringify(progress));
 
-                        //Find the first word whose meaning is not known
-                        let currentUnderstandingIndex: number = 0;
-                        for (let i = 0; i < progress.understandings.length; i++) {
-                            if (progress.understandings[i].card.word === currentCard.word) {
-                                currentUnderstandingIndex = i;
-                                break;
-                            }
-                        }
-                        let nextCard: Card = progress.understandings[0].card;
-                        for (let j = currentUnderstandingIndex + 1; j < progress.understandings.length; j++) {
-                            if (!progress.understandings[j].known) {
-                                nextCard = progress.understandings[j].card;
-                                break;
-                            }
-                        }
+                        currentCard = getCurrentCard(progress, currentCard);
 
                         dispatch({
                             type: 'UPDATE_PROGRESS',
-                            progress: progress, currentCard: nextCard,
+                            progress: progress, currentCard: currentCard,
                             isFrontCard: !isFrontCard
                         });
                     } else {
@@ -224,7 +189,7 @@ export const reducer: Reducer<DeckState> = (state: DeckState | undefined, incomi
 
     const action = incomingAction as KnownAction;
     switch (action.type) {
-        case 'REQUEST_DECK':
+        case 'INIT_DECK':
             return {
                 deckId: action.deckId,
                 cards: action.cards,
@@ -253,3 +218,28 @@ export const reducer: Reducer<DeckState> = (state: DeckState | undefined, incomi
             return state;
     }
 };
+
+function getCurrentCard(progress: Progress, currentCard: Card) {
+    let unknownWords = new Array<Card>();
+    let knownWords = new Array<Card>();
+    //Separate known and unknown words
+    progress.understandings.map(understanding => {
+        if (understanding.known) {
+            knownWords.push(understanding.card);
+        }
+        else {
+            unknownWords.push(understanding.card);
+        }
+    });
+    if (knownWords.length === progress.understandings.length) {
+        //Randomize any cards when all cards have been understood
+        let nextIndex = Math.floor(Math.random() * (knownWords.length - 1 - 0 + 1)) + 0;
+        currentCard = knownWords[nextIndex];
+    }
+    else {
+        //Randomize only unknown cards
+        let nextIndex = Math.floor(Math.random() * (unknownWords.length - 1 - 0 + 1)) + 0;
+        currentCard = unknownWords[nextIndex];
+    }
+    return currentCard;
+}

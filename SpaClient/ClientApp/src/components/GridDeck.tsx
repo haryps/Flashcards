@@ -1,16 +1,20 @@
 ﻿import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Card } from '../store/Deck';
 
 interface Props {
     deckId: number;
     currentValue: number;
     maxValue: number;
+    cards: Card[];
 }
 
 export class GridDeck extends React.PureComponent<Props> {
 
     public render() {
+        let percentage: number = (this.props.currentValue / this.props.maxValue) * 100;
+
         return (
             <React.Fragment>
                 <div className="col-md-4">
@@ -26,11 +30,15 @@ export class GridDeck extends React.PureComponent<Props> {
                         <div className="card-body">
                             <p style={{ marginBottom: "5px" }}>{this.props.currentValue} of {this.props.maxValue} words mastered</p>
                             <div className="progress" style={{ marginTop: "5px", marginBottom: "10px" }}>
-                                <div className="progress-bar bg-success" role="progressbar" style={{ width: "0%" }} aria-valuenow={0} aria-valuemin={0} aria-valuemax={100}></div>
+                                <div className="progress-bar bg-success" role="progressbar" style={{ width: `${percentage}%` }}
+                                    aria-valuenow={percentage} aria-valuemin={0} aria-valuemax={100}></div>
                             </div>
                             <div className="d-flex justify-content-between align-items-center">
                                 <div className="btn-group">
-                                    <Link to={`/deck/${this.props.deckId}`} className="btn btn-sm btn-outline-secondary">
+                                    <Link to={{
+                                        pathname: `/deck/${this.props.deckId}`,
+                                        state: this.props.cards
+                                    }} className="btn btn-sm btn-outline-secondary">
                                         Practice this deck →
                                     </Link>
                                 </div>

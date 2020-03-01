@@ -30,9 +30,16 @@ namespace Flashcards.Controllers
 
         [EnableCors("spaclient")]
         [HttpGet("DeckNum")]
-        public int DeckNum()
+        public IEnumerable<IEnumerable<Card>> DeckNum()
         {
-            return AppConst.DECKNUMS;
+            var vocabulary = new List<List<Card>>();
+            for (int i = 1; i <= AppConst.DECKNUMS; i++)
+            {
+                var cards = _vocabulary.GetVocabs(i).ToList();
+                vocabulary.Add(cards);
+            }
+
+            return vocabulary;
         }
 
         [EnableCors("spaclient")]

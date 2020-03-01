@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
+import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import './NavMenu.css';
 export default class NavMenu extends React.PureComponent {
@@ -21,11 +21,7 @@ export default class NavMenu extends React.PureComponent {
                     React.createElement(NavbarBrand, { tag: Link, to: "/" }, "Flashcards"),
                     React.createElement(NavbarToggler, { onClick: this.toggle, className: "mr-2" }),
                     React.createElement(Collapse, { className: "d-sm-inline-flex flex-sm-row-reverse", isOpen: this.state.isOpen, navbar: true },
-                        React.createElement("ul", { className: "navbar-nav flex-grow" },
-                            React.createElement(NavItem, null,
-                                React.createElement(NavLink, { tag: Link, className: "text-dark", to: "/Identity/Account/Login" }, "Log In")),
-                            React.createElement(NavItem, null,
-                                React.createElement(NavLink, { tag: Link, className: "text-dark", to: "/Identity/Account/Register" }, "Sign Up"))))))));
+                        React.createElement("ul", { className: "navbar-nav flex-grow" }))))));
     }
 }
 //# sourceMappingURL=NavMenu.js.map
