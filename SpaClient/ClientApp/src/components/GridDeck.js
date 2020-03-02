@@ -7,12 +7,12 @@ export class GridDeck extends React.PureComponent {
             React.createElement("div", { className: "col-md-4" },
                 React.createElement("div", { className: "card mb-4 box-shadow" },
                     React.createElement("svg", { height: "100%", width: "100%" },
-                        React.createElement("rect", { fill: "#55595c", x: "0", y: "0", height: "100%", width: "100%" }),
+                        React.createElement("rect", { fill: "#563d7c", strokeWidth: "0", stroke: "#563d7c", x: "0", y: "0", height: "100%", width: "100%", style: {} }),
                         React.createElement("text", { x: "50%", y: "50%", fontWeight: "bold", fill: "white", fontSize: "20px", textAnchor: "middle", dominantBaseline: "middle" },
                             "Deck ",
                             this.props.deckId)),
                     React.createElement("div", { className: "card-body" },
-                        React.createElement("p", { style: { marginBottom: "5px" } },
+                        React.createElement("p", { style: { color: "#2c3e50", marginBottom: "5px" } },
                             this.props.currentValue,
                             " of ",
                             this.props.maxValue,
@@ -24,7 +24,7 @@ export class GridDeck extends React.PureComponent {
                                 React.createElement(Link, { to: {
                                         pathname: `/deck/${this.props.deckId}`,
                                         state: this.props.cards
-                                    }, className: "btn btn-sm btn-outline-secondary" }, "Practice this deck \u2192"))))))));
+                                    }, className: "btn btn-sm btn-primary" }, "Practice this deck \u2192"))))))));
     }
 }
 ;

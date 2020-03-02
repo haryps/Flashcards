@@ -43,9 +43,9 @@ class Flashcards extends React.PureComponent {
         }
         return (React.createElement("main", { role: "main" },
             React.createElement(Introduction, null),
-            React.createElement("div", { className: "album py-5 bg-light" },
-                React.createElement("div", { className: "container" },
-                    React.createElement("div", { className: "row" },
+            React.createElement("div", { className: "album py-5", style: { color: "#1abc9c", backgroundColor: "#1abc9c" } },
+                React.createElement("div", { className: "container", style: { color: "#1abc9c", backgroundColor: "#1abc9c" } },
+                    React.createElement("div", { className: "row", style: { color: "#1abc9c", backgroundColor: "#1abc9c" } },
                         React.createElement(React.Fragment, null, decks))))));
     }
     setCurrentProgress(vocabulary) {

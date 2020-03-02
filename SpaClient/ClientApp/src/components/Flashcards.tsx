@@ -39,17 +39,17 @@ class Flashcards extends React.PureComponent<{}, FlashcardsState> {
 
         for (let i = 1; i <= this.state.decknum; i++) {
             decks.push(<GridDeck key={i} deckId={i} currentValue={this.state.currentValue[i]}
-                maxValue={this.state.maxValue[i]} cards={this.state.vocabulary[i-1]} />)
+                maxValue={this.state.maxValue[i]} cards={this.state.vocabulary[i - 1]} />)
         }
 
         return (
             <main role="main">
                 <Introduction />
 
-                <div className="album py-5 bg-light">
-                    <div className="container">
+                <div className="album py-5" style={{ color: "#1abc9c", backgroundColor: "#1abc9c" }}>
+                    <div className="container" style={{ color: "#1abc9c", backgroundColor: "#1abc9c" }}>
 
-                        <div className="row">
+                        <div className="row" style={{ color: "#1abc9c", backgroundColor: "#1abc9c" }}>
                             <React.Fragment>
                                 {decks}
                             </React.Fragment>
@@ -87,7 +87,7 @@ class Flashcards extends React.PureComponent<{}, FlashcardsState> {
                 maxValueArray[i] = vocabulary[i - 1].length;
 
                 this.setState({ decknum: i, currentValue: currentValueArray, maxValue: maxValueArray, vocabulary: vocabulary });
-            }            
+            }
         }
         else {
             throw "Sorry, your browser does not support web storage...";

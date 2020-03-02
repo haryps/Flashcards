@@ -20,7 +20,7 @@ export class GridDeck extends React.PureComponent<Props> {
                 <div className="col-md-4">
                     <div className="card mb-4 box-shadow">
                         <svg height="100%" width="100%">
-                            <rect fill="#55595c" x="0" y="0" height="100%" width="100%"></rect>
+                            <rect fill="#563d7c" strokeWidth="0" stroke="#563d7c" x="0" y="0" height="100%" width="100%" style={{}}></rect>
                             <text x="50%" y="50%" fontWeight="bold" fill="white" fontSize="20px"
                                 textAnchor="middle"
                                 dominantBaseline="middle">
@@ -28,7 +28,7 @@ export class GridDeck extends React.PureComponent<Props> {
                             </text>
                         </svg>
                         <div className="card-body">
-                            <p style={{ marginBottom: "5px" }}>{this.props.currentValue} of {this.props.maxValue} words mastered</p>
+                            <p style={{ color: "#2c3e50", marginBottom: "5px" }}>{this.props.currentValue} of {this.props.maxValue} words mastered</p>
                             <div className="progress" style={{ marginTop: "5px", marginBottom: "10px" }}>
                                 <div className="progress-bar bg-success" role="progressbar" style={{ width: `${percentage}%` }}
                                     aria-valuenow={percentage} aria-valuemin={0} aria-valuemax={100}></div>
@@ -38,7 +38,7 @@ export class GridDeck extends React.PureComponent<Props> {
                                     <Link to={{
                                         pathname: `/deck/${this.props.deckId}`,
                                         state: this.props.cards
-                                    }} className="btn btn-sm btn-outline-secondary">
+                                    }} className="btn btn-sm btn-primary">
                                         Practice this deck →
                                     </Link>
                                 </div>
