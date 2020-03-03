@@ -4,6 +4,7 @@ import './album.css';
 import Introduction from './Introduction';
 import { GridDeck } from './GridDeck';
 import { Progress, Card } from '../store/Deck';
+import { ApiBaseUrl } from '../Constants';
 
 interface FlashcardsState {
     decknum: number;
@@ -21,7 +22,7 @@ class Flashcards extends React.PureComponent<{}, FlashcardsState> {
     }
 
     public async componentDidMount() {
-        const url = 'https://localhost:44393/api/deck/decknum';
+        const url = ApiBaseUrl + '/api/deck/decknum';
         fetch(url, { mode: 'cors', credentials: 'same-origin' })
             .then(response => response.json() as Promise<Card[][]>)
             .then(vocabulary => {

@@ -11,17 +11,20 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Net;
+using IHostingEnvironment = Microsoft.Extensions.Hosting.IHostingEnvironment;
 
 namespace Flashcards
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            CurrentEnvironment = env;
         }
 
         public IConfiguration Configuration { get; }
+        private IWebHostEnvironment CurrentEnvironment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -49,7 +52,11 @@ namespace Flashcards
                 // this defines a CORS policy called "default"
                 options.AddPolicy("spaclient", policy =>
                 {
-                    policy.WithOrigins("https://localhost:44337")
+                    string clientBaseUrl = CurrentEnvironment.IsDevelopment()
+                    ? "https://localhost:44337"
+                    : "https://greflashcards.azurewebsites.net";
+
+                    policy.WithOrigins(clientBaseUrl)
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });
