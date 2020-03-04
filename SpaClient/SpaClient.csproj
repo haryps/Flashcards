@@ -29,7 +29,6 @@
     <None Remove="ClientApp\src\components\Flashcards.tsx" />
     <None Remove="ClientApp\src\components\GridDeck.tsx" />
     <None Remove="ClientApp\src\components\NavMenu.tsx" />
-    <None Remove="ClientApp\src\Constants.ts" />
     <None Remove="ClientApp\src\store\GridDeck.ts" />
   </ItemGroup>
 
@@ -38,7 +37,6 @@
     <TypeScriptCompile Include="ClientApp\src\components\Flashcards.tsx" />
     <TypeScriptCompile Include="ClientApp\src\components\GridDeck.tsx" />
     <TypeScriptCompile Include="ClientApp\src\components\NavMenu.tsx" />
-    <TypeScriptCompile Include="ClientApp\src\Constants.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

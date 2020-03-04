@@ -28,7 +28,6 @@ class Flashcards extends React.PureComponent<{}, FlashcardsState> {
             .then(vocabulary => {
 
                 this.setCurrentProgress(vocabulary);
-                //this.requestDeck(vocabulary);
             })
     }
 
