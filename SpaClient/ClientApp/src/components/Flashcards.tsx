@@ -61,13 +61,14 @@ class Flashcards extends React.PureComponent<{}, FlashcardsState> {
     }
 
     private setCurrentProgress(vocabulary: Card[][]) {
-        let currentValue = 0;
-        let maxValue = 0;
+
         let currentValueArray: number[] = new Array(vocabulary.length);
         let maxValueArray: number[] = new Array(vocabulary.length);
 
         if (typeof (Storage) !== "undefined") {
             for (let i = 1; i <= vocabulary.length; i++) {
+                let currentValue = 0;
+
                 let value = localStorage.getItem(`deck${i}_progress`);
                 if (value) {
 
@@ -77,7 +78,7 @@ class Flashcards extends React.PureComponent<{}, FlashcardsState> {
                             currentValue++;
                         }
                     });
-                    maxValue = progress.understandings.length;
+                    
                     currentValueArray[i] = currentValue;
                 }
                 else {

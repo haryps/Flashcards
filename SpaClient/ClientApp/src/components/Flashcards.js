@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import './album.css';
 import Introduction from './Introduction';
 import { GridDeck } from './GridDeck';
+import { ApiBaseUrl } from '../Constants';
 
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -26,15 +27,11 @@ class Flashcards extends React.PureComponent {
     }
     componentDidMount() {
         return __awaiter(this, void 0, void 0, function* () {
-            const url = 'https://greflashcardsapi.azurewebsites.net' + '/api/deck/decknum';
-            console.log(url);
-            //console.log(process.env.NODE_ENV);
-            //console.log(process.env.PUBLIC_URL);
+            const url = ApiBaseUrl + '/api/deck/decknum';
             fetch(url, { mode: 'cors', credentials: 'same-origin' })
                 .then(response => response.json())
                 .then(vocabulary => {
                 this.setCurrentProgress(vocabulary);
-                //this.requestDeck(vocabulary);
             });
         });
     }
@@ -52,12 +49,11 @@ class Flashcards extends React.PureComponent {
                         React.createElement(React.Fragment, null, decks))))));
     }
     setCurrentProgress(vocabulary) {
-        let currentValue = 0;
-        let maxValue = 0;
         let currentValueArray = new Array(vocabulary.length);
         let maxValueArray = new Array(vocabulary.length);
         if (typeof (Storage) !== "undefined") {
             for (let i = 1; i <= vocabulary.length; i++) {
+                let currentValue = 0;
                 let value = localStorage.getItem(`deck${i}_progress`);
                 if (value) {
                     let progress = JSON.parse(value);
@@ -66,7 +62,6 @@ class Flashcards extends React.PureComponent {
                             currentValue++;
                         }
                     });
-                    maxValue = progress.understandings.length;
                     currentValueArray[i] = currentValue;
                 }
                 else {
