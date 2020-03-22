@@ -25,6 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\components\authorization\ApiAuthorizationConstants.ts" />
+    <None Remove="ClientApp\src\components\authorization\AuthorizeService.ts" />
+    <None Remove="ClientApp\src\components\authorization\LoginMenu.tsx" />
     <None Remove="ClientApp\src\components\Deck.tsx" />
     <None Remove="ClientApp\src\components\Flashcards.tsx" />
     <None Remove="ClientApp\src\components\GridDeck.tsx" />
@@ -33,6 +36,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\components\authorization\ApiAuthorizationConstants.ts" />
+    <TypeScriptCompile Include="ClientApp\src\components\authorization\AuthorizeService.ts" />
+    <TypeScriptCompile Include="ClientApp\src\components\authorization\LoginMenu.tsx" />
     <TypeScriptCompile Include="ClientApp\src\components\Deck.tsx" />
     <TypeScriptCompile Include="ClientApp\src\components\Flashcards.tsx" />
     <TypeScriptCompile Include="ClientApp\src\components\GridDeck.tsx" />
