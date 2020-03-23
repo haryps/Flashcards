@@ -7,7 +7,7 @@ import authService from './AuthorizeService';
 
 
 interface LoginMenuState {
-    isAuthenticated: boolean;
+    isAuthenticated: boolean | null;
     userName?: string | null;
     _subscription: number;
 }

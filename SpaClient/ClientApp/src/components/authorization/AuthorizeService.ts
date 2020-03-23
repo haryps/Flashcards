@@ -36,7 +36,7 @@ export class AuthorizeService {
     //    Pop-Up blocker or the user has disabled PopUps.
     // 3) If the two methods above fail, we redirect the browser to the IdP to perform a traditional
     //    redirect flow.
-    async signIn(state: string) {
+    async signIn(state: string): Promise<any> {
         const userManager = await this.ensureUserManagerInitialized();
         try {
             const silentUser = await userManager.signinSilent(this.createArguments());
@@ -74,7 +74,7 @@ export class AuthorizeService {
         }
     }
 
-    async completeSignIn(url: string) {
+    async completeSignIn(url: string): Promise<any> {
         try {
             const userManager = await this.ensureUserManagerInitialized();
             const user = await userManager.signinCallback(url);
@@ -91,7 +91,7 @@ export class AuthorizeService {
     //    Pop-Up blocker or the user has disabled PopUps.
     // 2) If the method above fails, we redirect the browser to the IdP to perform a traditional
     //    post logout redirect flow.
-    async signOut(state: string) {
+    async signOut(state: string): Promise<any> {
         const userManager = await this.ensureUserManagerInitialized();
         try {
             if (this._popUpDisabled) {
@@ -113,7 +113,7 @@ export class AuthorizeService {
         }
     }
 
-    async completeSignOut(url: string) {
+    async completeSignOut(url: string): Promise<any> {
         const userManager = await this.ensureUserManagerInitialized();
         try {
             const response = await userManager.signoutCallback(url);
@@ -194,12 +194,12 @@ export class AuthorizeService {
         //});
 
         let config: UserManagerSettings = {
-            authority: "http://localhost:5000",
-            client_id: "spa",
-            redirect_uri: "http://localhost:5003",
+            authority: "https://localhost:44350",
+            client_id: "Flashcards",
+            redirect_uri: "https://localhost:44337",
             response_type: "code",
             scope: "openid profile api1",
-            post_logout_redirect_uri: "http://localhost:5003",
+            post_logout_redirect_uri: "https://localhost:4433",
         };
         //config.automaticSilentRenew = true;
         //config.includeIdTokenInSilentRenew = true;
