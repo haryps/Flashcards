@@ -24,12 +24,15 @@ export class Login extends React.Component {
         const action = this.props.action;
         switch (action) {
             case LoginActions.Login:
+                console.log('LoginActions.Login');
                 this.login(this.getReturnUrl(""));
                 break;
             case LoginActions.LoginCallback:
+                console.log('LoginActions.LoginCallback');
                 this.processLoginCallback();
                 break;
             case LoginActions.LoginFailed:
+                console.log('LoginActions.LoginFailed');
                 const params = new URLSearchParams(window.location.search);
                 const error = params.get(QueryParameterNames.Message);
                 this.setState({ message: error });

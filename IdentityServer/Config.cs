@@ -61,15 +61,15 @@ namespace IdentityServer
                 // SPA client using code flow + pkce
                 new Client
                 {
-                    ClientId = "spa",
+                    ClientId = "Flashcards",
                     ClientName = "SPA Client",
                     AllowedGrantTypes = GrantTypes.Code,
                     RequirePkce = true,
                     RequireClientSecret = false,
 
-                    RedirectUris =           { "http://localhost:5003" },
-                    PostLogoutRedirectUris = { "http://localhost:5003" },
-                    AllowedCorsOrigins =     { "http://localhost:5003" },
+                    RedirectUris =           { "https://localhost:44337/callback" },
+                    PostLogoutRedirectUris = { "https://localhost:44337" },
+                    AllowedCorsOrigins =     { "https://localhost:44337" },
 
                     AllowedScopes =
                     {

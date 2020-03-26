@@ -4,27 +4,55 @@ import { ApplicationPaths, ApplicationName } from './ApiAuthorizationConstants';
 export class AuthorizeService {
     _callbacks = Array();
     _nextSubscriptionId: number = 0;
-    _user?: User | null = null;
+    _user?: any;
     _isAuthenticated: boolean = false;
+    _userManager: UserManager | null | undefined;
 
     // By default pop ups are disabled because they don't work properly on Edge.
     // If you want to enable pop up authentication simply set this flag to false.
     _popUpDisabled = true;
+
+    //constructor() {
+    //    let settings: UserManagerSettings = {
+    //        authority: "https://localhost:44350",
+    //        client_id: "Flashcards",
+    //        redirect_uri: "https://localhost:44337",
+    //        response_type: "code",
+    //        scope: "openid profile api1",
+    //        post_logout_redirect_uri: "https://localhost:4433",
+    //    };
+    //    //config.automaticSilentRenew = true;
+    //    //config.includeIdTokenInSilentRenew = true;
+    //    //config.userStore = new WebStorageStateStore({
+    //    //    prefix: ApplicationName
+    //    //});
+
+    //    this._userManager = new UserManager(settings);
+
+    //    this._userManager.events.addUserSignedOut(async () => {
+    //        await this._userManager?.removeUser();
+    //        this.updateState(undefined);
+    //    });
+    //}
 
     async isAuthenticated(): Promise<boolean> {
         const user = await this.getUser();
         return !!user;
     }
 
-    async getUser() {
-        const userManager = await this.ensureUserManagerInitialized();
-        const user: User | null = await userManager.getUser();
+    async getUser(): Promise<any> {
+        if (this._user && this._user.profile) {
+            return this._user.profile;
+        }
+
+        await this.ensureUserManagerInitialized();
+        const user = await this._userManager?.getUser();
         return user && user.profile;
     }
 
     async getAccessToken() {
-        const userManager = await this.ensureUserManagerInitialized();
-        const user = await userManager.getUser();
+        await this.ensureUserManagerInitialized();
+        const user = await this._userManager?.getUser();
         return user && user.access_token;
     }
 
@@ -37,9 +65,9 @@ export class AuthorizeService {
     // 3) If the two methods above fail, we redirect the browser to the IdP to perform a traditional
     //    redirect flow.
     async signIn(state: string): Promise<any> {
-        const userManager = await this.ensureUserManagerInitialized();
+        await this.ensureUserManagerInitialized();
         try {
-            const silentUser = await userManager.signinSilent(this.createArguments());
+            const silentUser = await this._userManager?.signinSilent(this.createArguments());
             this.updateState(silentUser);
             return this.success(state);
         } catch (silentError) {
@@ -51,7 +79,7 @@ export class AuthorizeService {
                     throw new Error('Popup disabled. Change \'AuthorizeService.js:AuthorizeService._popupDisabled\' to false to enable it.')
                 }
 
-                const popUpUser = await userManager.signinPopup(this.createArguments());
+                const popUpUser = await this._userManager?.signinPopup(this.createArguments());
                 this.updateState(popUpUser);
                 return this.success(state);
             } catch (popUpError) {
@@ -64,20 +92,20 @@ export class AuthorizeService {
 
                 // PopUps might be blocked by the user, fallback to redirect
                 try {
-                    await userManager.signinRedirect(this.createArguments(state));
+                    await this._userManager?.signinRedirect(this.createArguments(state));
                     return this.redirect();
                 } catch (redirectError) {
                     console.log("Redirect authentication error: ", redirectError);
                     return this.error(redirectError);
                 }
             }
-        }
+        }       
     }
 
     async completeSignIn(url: string): Promise<any> {
         try {
-            const userManager = await this.ensureUserManagerInitialized();
-            const user = await userManager.signinCallback(url);
+            await this.ensureUserManagerInitialized();
+            const user = await this._userManager?.signinCallback(url);
             this.updateState(user);
             return this.success(user && user.state);
         } catch (error) {
@@ -92,19 +120,19 @@ export class AuthorizeService {
     // 2) If the method above fails, we redirect the browser to the IdP to perform a traditional
     //    post logout redirect flow.
     async signOut(state: string): Promise<any> {
-        const userManager = await this.ensureUserManagerInitialized();
+        await this.ensureUserManagerInitialized();
         try {
             if (this._popUpDisabled) {
                 throw new Error('Popup disabled. Change \'AuthorizeService.js:AuthorizeService._popupDisabled\' to false to enable it.')
             }
 
-            await userManager.signoutPopup(this.createArguments());
-            this.resetState();
+            await this._userManager?.signoutPopup(this.createArguments());
+            this.updateState(undefined);
             return this.success(state);
         } catch (popupSignOutError) {
             console.log("Popup signout error: ", popupSignOutError);
             try {
-                await userManager.signoutRedirect(this.createArguments(state));
+                await this._userManager?.signoutRedirect(this.createArguments(state));
                 return this.redirect();
             } catch (redirectSignOutError) {
                 console.log("Redirect signout error: ", redirectSignOutError);
@@ -114,10 +142,10 @@ export class AuthorizeService {
     }
 
     async completeSignOut(url: string): Promise<any> {
-        const userManager = await this.ensureUserManagerInitialized();
+        await this.ensureUserManagerInitialized();
         try {
-            const response = await userManager.signoutCallback(url);
-            this.resetState();
+            const response = await this._userManager?.signoutCallback(url);
+            this.updateState(undefined);
             return this.success(response);
         } catch (error) {
             console.log(`There was an error trying to log out '${error}'.`);
@@ -125,7 +153,7 @@ export class AuthorizeService {
         }
     }
 
-    updateState(user: User) {
+    updateState(user: User | undefined) {
         this._user = user;
         this._isAuthenticated = !!this._user;
         this.notifySubscribers();
@@ -176,10 +204,10 @@ export class AuthorizeService {
         return { status: AuthenticationResultStatus.Redirect };
     }
 
-    async ensureUserManagerInitialized(): Promise<UserManager> {
-        //if (this.userManager !== undefined) {
-        //    return;
-        //}
+    async ensureUserManagerInitialized(): Promise<void> {
+        if (this._userManager !== undefined) {
+            return;
+        }
 
         //let response = await fetch(ApplicationPaths.ApiAuthorizationClientConfigurationUrl);
         //if (!response.ok) {
@@ -193,13 +221,13 @@ export class AuthorizeService {
         //    prefix: ApplicationName
         //});
 
-        let config: UserManagerSettings = {
+        let settings: UserManagerSettings = {
             authority: "https://localhost:44350",
             client_id: "Flashcards",
-            redirect_uri: "https://localhost:44337",
+            redirect_uri: "https://localhost:44337/callback",
             response_type: "code",
             scope: "openid profile api1",
-            post_logout_redirect_uri: "https://localhost:4433",
+            post_logout_redirect_uri: "https://localhost:44337",
         };
         //config.automaticSilentRenew = true;
         //config.includeIdTokenInSilentRenew = true;
@@ -207,17 +235,15 @@ export class AuthorizeService {
         //    prefix: ApplicationName
         //});
 
-        let userManager = new UserManager(config);
+        this._userManager = new UserManager(settings);
 
-        userManager.events.addUserSignedOut(async () => {
-            await userManager.removeUser();
-            this.resetState();
+        this._userManager.events.addUserSignedOut(async () => {
+            await this._userManager?.removeUser();
+            this.updateState(undefined);
         });
-
-        return userManager;
     }
 
-    static get instance() { return authService }
+    //static get instance() { return authService }
 }
 
 const authService = new AuthorizeService();

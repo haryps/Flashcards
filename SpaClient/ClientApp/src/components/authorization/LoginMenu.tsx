@@ -5,10 +5,9 @@ import { ApplicationPaths } from './ApiAuthorizationConstants';
 import { Fragment } from 'react';
 import authService from './AuthorizeService';
 
-
 interface LoginMenuState {
-    isAuthenticated: boolean | null;
-    userName?: string | null;
+    isAuthenticated?: boolean | null;
+    userName: string;
     _subscription: number;
 }
 

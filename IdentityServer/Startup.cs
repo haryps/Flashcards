@@ -74,6 +74,21 @@ namespace IdentityServer
                     options.ClientId = "copy client ID from Google here";
                     options.ClientSecret = "copy client secret from Google here";
                 });
+
+            services.AddCors(options =>
+            {
+                // this defines a CORS policy called "default"
+                options.AddPolicy("spaclient", policy =>
+                {
+                    string clientBaseUrl = Environment.IsDevelopment()
+                    ? "https://localhost:44337"
+                    : "https://greflashcards.azurewebsites.net";
+
+                    policy.WithOrigins(clientBaseUrl)
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
         }
 
         public void Configure(IApplicationBuilder app)
