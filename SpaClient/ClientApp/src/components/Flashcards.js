@@ -37,7 +37,7 @@ class Flashcards extends React.PureComponent {
     }
     render() {
         let decks = [];
-        console.log('state decknum:' + this.state.decknum);
+        //console.log('state decknum:' + this.state.decknum);
         for (let i = 1; i <= this.state.decknum; i++) {
             decks.push(React.createElement(GridDeck, { key: i, deckId: i, currentValue: this.state.currentValue[i], maxValue: this.state.maxValue[i], cards: this.state.vocabulary[i - 1] }));
         }

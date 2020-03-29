@@ -12,29 +12,6 @@ export class AuthorizeService {
     // If you want to enable pop up authentication simply set this flag to false.
     _popUpDisabled = true;
 
-    //constructor() {
-    //    let settings: UserManagerSettings = {
-    //        authority: "https://localhost:44350",
-    //        client_id: "Flashcards",
-    //        redirect_uri: "https://localhost:44337",
-    //        response_type: "code",
-    //        scope: "openid profile api1",
-    //        post_logout_redirect_uri: "https://localhost:4433",
-    //    };
-    //    //config.automaticSilentRenew = true;
-    //    //config.includeIdTokenInSilentRenew = true;
-    //    //config.userStore = new WebStorageStateStore({
-    //    //    prefix: ApplicationName
-    //    //});
-
-    //    this._userManager = new UserManager(settings);
-
-    //    this._userManager.events.addUserSignedOut(async () => {
-    //        await this._userManager?.removeUser();
-    //        this.updateState(undefined);
-    //    });
-    //}
-
     async isAuthenticated(): Promise<boolean> {
         const user = await this.getUser();
         return !!user;
@@ -228,12 +205,12 @@ export class AuthorizeService {
             response_type: "code",
             scope: "openid profile api1",
             post_logout_redirect_uri: "https://localhost:44337",
+            automaticSilentRenew: true,
+            includeIdTokenInSilentRenew: true,
+            filterProtocolClaims: true,
+            loadUserInfo: true,
+            monitorSession: true
         };
-        //config.automaticSilentRenew = true;
-        //config.includeIdTokenInSilentRenew = true;
-        //config.userStore = new WebStorageStateStore({
-        //    prefix: ApplicationName
-        //});
 
         this._userManager = new UserManager(settings);
 

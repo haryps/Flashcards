@@ -35,7 +35,7 @@ class Flashcards extends React.PureComponent<{}, FlashcardsState> {
 
         let decks: JSX.Element[] = [];
 
-        console.log('state decknum:' + this.state.decknum);
+        //console.log('state decknum:' + this.state.decknum);
 
         for (let i = 1; i <= this.state.decknum; i++) {
             decks.push(<GridDeck key={i} deckId={i} currentValue={this.state.currentValue[i]}

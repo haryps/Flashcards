@@ -7,12 +7,19 @@ import Deck from './components/Deck';
 import './custom.css';
 import { ApplicationPaths } from './components/authorization/ApiAuthorizationConstants';
 import ApiAuthorizationRoutes from './components/authorization/ApiAuthorizationRoutes';
+import Callback from './components/authorization/Callback';
 
-export default () => (
-    <Layout>
-        <Route exact path='/' component={Flashcards} />
-        <Route path='/flashcards' component={Flashcards} />
-        <Route path='/deck/:id?' component={Deck} />
-        <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
-    </Layout>
-);
+export default class App extends React.Component {
+
+    render() {
+        return (
+            <Layout>
+                <Route exact path='/' component={Flashcards} />
+                <Route path='/flashcards' component={Flashcards} />
+                <Route path='/deck/:id?' component={Deck} />
+                <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
+                <Route exact path='/callback' component={Callback} />
+            </Layout>
+        );
+    }
+}
