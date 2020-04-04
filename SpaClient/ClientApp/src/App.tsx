@@ -18,7 +18,6 @@ export default class App extends React.Component {
                 <Route path='/flashcards' component={Flashcards} />
                 <Route path='/deck/:id?' component={Deck} />
                 <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
-                <Route exact path='/callback' component={Callback} />
             </Layout>
         );
     }

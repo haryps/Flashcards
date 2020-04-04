@@ -67,7 +67,7 @@ namespace IdentityServer
                     RequirePkce = true,
                     RequireClientSecret = false,
 
-                    RedirectUris =           { "https://localhost:44337/callback" },
+                    RedirectUris =           { "https://localhost:44337/callback.html" },
                     PostLogoutRedirectUris = { "https://localhost:44337" },
                     AllowedCorsOrigins =     { "https://localhost:44337" },
 

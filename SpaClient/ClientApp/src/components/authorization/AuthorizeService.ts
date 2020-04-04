@@ -201,7 +201,7 @@ export class AuthorizeService {
         let settings: UserManagerSettings = {
             authority: "https://localhost:44350",
             client_id: "Flashcards",
-            redirect_uri: "https://localhost:44337/callback",
+            redirect_uri: "https://localhost:44337/callback.html",
             response_type: "code",
             scope: "openid profile api1",
             post_logout_redirect_uri: "https://localhost:44337",

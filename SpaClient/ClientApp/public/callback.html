@@ -5,11 +5,10 @@
     <title></title>
 </head>
 <body>
-    
+    <script src="oidc-client.js"></script>    
     <script>
         new Oidc.UserManager({ response_mode: "query" }).signinRedirectCallback().then(x => {
-            console.log("callback.html");
-            x.window.location = "index.html";
+            window.location = x.state;
         }).catch(function (e) {
             console.error(e);
         });

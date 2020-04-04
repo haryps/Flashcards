@@ -13,6 +13,9 @@ interface CallbackPageProps {
 }
 
 const Callback = (props: CallbackPageProps) => {
+
+    console.log('Render Callback');
+
     const successCallback = (user: User) => {
         // get the user's previous location, passed during signinRedirect()
         const redirectPath = user.state as string;
