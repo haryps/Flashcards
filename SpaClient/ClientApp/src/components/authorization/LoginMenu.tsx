@@ -30,6 +30,8 @@ export class LoginMenu extends React.PureComponent<{}, LoginMenuState> {
 
     async populateState() {
         const [isAuthenticated, user] = await Promise.all([authService.isAuthenticated(), authService.getUser()])
+        console.log(isAuthenticated);
+        console.log(user);
         this.setState({
             isAuthenticated,
             userName: user && user.name,

@@ -24,7 +24,7 @@ class Deck extends React.PureComponent<DeckProps> {
 
     public componentDidMount() {
         const deckId = parseInt(this.props.match.params.id, 10);
-        this.props.initDeck(deckId, this.props.location.state);
+        this.props.initDeck(deckId, this.props.location.state as any);
     }
 
     handleClick(event: MouseEvent) {

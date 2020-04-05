@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace IdentityServer
 {
-    public static class Config
+    public static class ProdConfig
     {
         public static IEnumerable<IdentityResource> Ids =>
             new IdentityResource[]
@@ -67,9 +67,9 @@ namespace IdentityServer
                     RequirePkce = true,
                     RequireClientSecret = false,
 
-                    RedirectUris =           { "https://localhost:44337/callback.html" },
-                    PostLogoutRedirectUris = { "https://localhost:44337" },
-                    AllowedCorsOrigins =     { "https://localhost:44337" },
+                    RedirectUris =           { "https://greflashcards.azurewebsites.net/callback.html" },
+                    PostLogoutRedirectUris = { "https://greflashcards.azurewebsites.net" },
+                    AllowedCorsOrigins =     { "https://greflashcards.azurewebsites.net" },
 
                     AllowedScopes =
                     {

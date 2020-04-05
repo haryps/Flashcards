@@ -27,17 +27,15 @@ export class Login extends React.Component<LoginProps, LoginState> {
 
     componentDidMount() {
         const action = this.props.action;
+        console.log('action: ' + action);
         switch (action) {
             case LoginActions.Login:
-                console.log('LoginActions.Login');
                 this.login(this.getReturnUrl(""));
                 break;
             case LoginActions.LoginCallback:
-                console.log('LoginActions.LoginCallback');
                 this.processLoginCallback();
                 break;
             case LoginActions.LoginFailed:
-                console.log('LoginActions.LoginFailed');
                 const params = new URLSearchParams(window.location.search);
                 const error = params.get(QueryParameterNames.Message);
                 this.setState({ message: error });
@@ -75,6 +73,7 @@ export class Login extends React.Component<LoginProps, LoginState> {
     }
 
     async login(returnUrl: string) {
+        console.log('returnUrl: ' + returnUrl);
         const result = await authService.signIn(returnUrl);
         switch (result.status) {
             case AuthenticationResultStatus.Redirect:

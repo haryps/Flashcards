@@ -1,5 +1,6 @@
 import { UserManager, WebStorageStateStore, UserManagerSettings, User } from 'oidc-client';
 import { ApplicationPaths, ApplicationName } from './ApiAuthorizationConstants';
+import { SpaBaseUrl, IdentityBaseUrl } from '../../Constants';
 
 export class AuthorizeService {
     _callbacks = Array();
@@ -199,12 +200,12 @@ export class AuthorizeService {
         //});
 
         let settings: UserManagerSettings = {
-            authority: "https://localhost:44350",
+            authority: IdentityBaseUrl,
             client_id: "Flashcards",
-            redirect_uri: "https://localhost:44337/callback.html",
+            redirect_uri: SpaBaseUrl + '/callback.html',
             response_type: "code",
             scope: "openid profile api1",
-            post_logout_redirect_uri: "https://localhost:44337",
+            post_logout_redirect_uri: SpaBaseUrl,
             automaticSilentRenew: true,
             includeIdTokenInSilentRenew: true,
             filterProtocolClaims: true,

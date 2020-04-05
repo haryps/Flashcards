@@ -50,17 +50,35 @@ namespace IdentityServer
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            var builder = services.AddIdentityServer(options =>
+            IIdentityServerBuilder builder = null;
+            if (Environment.IsDevelopment())
+            {
+                builder = services.AddIdentityServer(options =>
+                    {
+                        options.Events.RaiseErrorEvents = true;
+                        options.Events.RaiseInformationEvents = true;
+                        options.Events.RaiseFailureEvents = true;
+                        options.Events.RaiseSuccessEvents = true;
+                    })
+                    .AddInMemoryIdentityResources(DevConfig.Ids)
+                    .AddInMemoryApiResources(DevConfig.Apis)
+                    .AddInMemoryClients(DevConfig.Clients)
+                    .AddAspNetIdentity<ApplicationUser>();
+            }
+            else
+            {
+                builder = services.AddIdentityServer(options =>
                 {
                     options.Events.RaiseErrorEvents = true;
                     options.Events.RaiseInformationEvents = true;
                     options.Events.RaiseFailureEvents = true;
                     options.Events.RaiseSuccessEvents = true;
                 })
-                .AddInMemoryIdentityResources(Config.Ids)
-                .AddInMemoryApiResources(Config.Apis)
-                .AddInMemoryClients(Config.Clients)
-                .AddAspNetIdentity<ApplicationUser>();
+                    .AddInMemoryIdentityResources(ProdConfig.Ids)
+                    .AddInMemoryApiResources(ProdConfig.Apis)
+                    .AddInMemoryClients(ProdConfig.Clients)
+                    .AddAspNetIdentity<ApplicationUser>();
+            }
 
             // not recommended for production - you need to store your key material somewhere secure
             builder.AddDeveloperSigningCredential();
@@ -80,11 +98,11 @@ namespace IdentityServer
                 // this defines a CORS policy called "default"
                 options.AddPolicy("spaclient", policy =>
                 {
-                    string clientBaseUrl = Environment.IsDevelopment()
+                    string SPA_BASE_URL = Environment.IsDevelopment()
                     ? "https://localhost:44337"
                     : "https://greflashcards.azurewebsites.net";
 
-                    policy.WithOrigins(clientBaseUrl)
+                    policy.WithOrigins(SPA_BASE_URL)
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });
